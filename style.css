@@ -1,0 +1,213 @@
+/*********** Theme colors ********/
+
+.pinkColor,
+.pinkColor * {
+  color: rgb(255, 64, 129);
+}
+.navyBlueColor {
+  color: rgb(63, 81, 181);
+}
+
+.pinkColorBg {
+  background-color: rgb(255, 64, 129);
+}
+.pinkColorBorder {
+  border: 1px solid rgb(255, 64, 129);
+}
+.navyBlueColorBg {
+  background-color: rgb(63, 81, 181);
+}
+.navyBlueColorBorder {
+  border: 1px solid rgb(63, 81, 181);
+}
+
+.main-bg-color {
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(65, 0, 156, 1) 47%,
+    rgba(255, 0, 196, 1) 100%
+  );
+}
+
+/******** menu bar *******/
+.wrapper {
+  display: flex;
+  padding: 10px;
+  align-items: flex-end;
+}
+
+/************* overlay *******/
+.overlay {
+  background-color: rgba(177, 112, 169, 0.5);
+  display: none;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+}
+.overlay-flex-wrapper {
+  display: flex;
+  align-items: flex-start;
+  height: 100%;
+  width: 100%;
+}
+#overlay-settings {
+  position: absolute;
+}
+
+/*** heatingBoard overlay ***/
+.mdl-card.custom {
+  width: 76%;
+}
+.progressBoard {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  display: none;
+  z-index: 2;
+}
+.progressBoardContent {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+.progressBoardContent .contentBoard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.progressBoardContent .contentBoard div {
+  margin-right: 10px;
+}
+.progressBoardContent .contentBoard div h5 {
+  display: flex;
+  font-size: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+.progressBoardContent .contentBoard div,
+.progressBoardContent .contentBoard p {
+  text-align: center;
+}
+.progressBoardContent img {
+  width: 40%;
+  height: auto;
+}
+
+/********* front button ***********/
+
+.front-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5%;
+  cursor: pointer;
+  background-color: whitesmoke;
+}
+
+.icon-big {
+  font-size: 8rem;
+}
+
+/********* component state ***********/
+.disabled,
+.disabled * {
+  color: grey;
+  opacity: 0.8;
+  cursor: auto;
+  pointer-events: none;
+}
+
+/********** temperature bubble **********/
+
+.mdl-js-slider {
+  width: 100%;
+}
+
+/* badge of bubble styling */
+.bubble {
+  background: rgb(255, 64, 129);
+  margin-top: 10px;
+  color: white;
+  padding: 15px 5px;
+  position: absolute;
+  /*perfect circle with unknown width and height*/
+  border-radius: 50% 50% 50% 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.4rem;
+}
+
+/********* info chips ***********/
+
+.infoChips {
+  display: flex;
+  justify-content: center;
+}
+
+.infoChips p {
+  border-radius: 20px;
+}
+.infoChips p:nth-child(1) {
+  margin-left: 8%;
+  margin-right: 6%;
+}
+.infoChips p:nth-child(2) {
+  margin-right: 10%;
+}
+.infoChips p span {
+  display: inline-block;
+  color: white;
+  font-size: 1.5rem;
+  padding: 10px;
+}
+
+.infoChips span:nth-child(2) {
+  border-bottom-right-radius: 20px;
+  border-top-right-radius: 20px;
+  margin-top: -1px;
+  margin-right: -2px;
+}
+
+/**** end of info chips **/
+
+/********* responsive ***********/
+@media only screen and (max-width: 800px) {
+  .icon-big {
+    font-size: 4rem;
+  }
+
+  .front-card h3 {
+    font-size: 2rem;
+  }
+  #heatingBoardContent .contentBoard div h2 {
+    font-size: 2rem;
+  }
+  #heatingBoardContent .contentBoard div h5 {
+    font-size: 1rem;
+  }
+  #heatingBoardContent .contentBoard {
+    margin-right: 10px;
+    flex-direction: row;
+    justify-content: center;
+  }
+  .infoChips p {
+    max-width: 165px;
+  }
+
+  .infoChips p span {
+    text-align: center;
+  }
+
+  .infoChips span:nth-child(2) {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 0px;
+    margin-left: -1px;
+  }
+}

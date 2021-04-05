@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Temperature App</title>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <link rel="stylesheet" href="./material-ui/font/icons.css">
+<link rel="stylesheet" href="./material-ui//css/material.indigo-pink.min.css">
+<link rel="stylesheet" href="./style.css">
+<script defer src="./material-ui/js/material.min.js"></script>
+
+</head>
+
+<!-- this project is using html light material-ui host on https://getmdl.io/ -->
+<!-- material-ui icons name searchhttps://fonts.google.com/icons?selected=Material+Icons -->
+
+<body class="main-bg-color">
+</span>
+  <!-- heating board-->
+  <div id="heatingBoard" class="progressBoard" style="background-color:#921772;">
+    <div  class="progressBoardContent">
+      <div class="mdl-card mdl-shadow--2dp custom">
+        <div style='width: 100%;' class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+        <div class="mdl-card__title mdl-card--expand">
+          <h4 class="mdl-card__title-text pinkColor">Water heating in progress...</h4>
+        </div>
+        <div class="mdl-card__supporting-text contentBoard">
+         <!--  <img src="./assets/temp_rising.gif" /> -->
+          <div>
+            <h5 class="navyBlueColor"><i class="material-icons navyBlueColor">device_thermostat</i>Current Temperature</h5>
+            <h2 id='currentTemperature' class="navyBlueColor">20&#xb0;C</h2>
+          </div>
+          <div>
+            <h5 class="navyBlueColor"><i class="material-icons pinkColor">device_thermostat</i>Desire Temperature</h5>
+              <h2 id='desireTemperature' class="pinkColor">25&#xb0;C</h2>
+          </div>
+  
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+          <button id="terminateProcessHeating" class="mdl-button">
+            <i class="material-icons pinkColor">not_interested</i> <span>&nbsp;Terminate process</span>
+          </button>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+   <!--end of heating board-->
+   <!-- water filling board-->
+  <div id="waterFillingBoard" class="progressBoard navyBlueColorBg" style="opacity: ;">
+    <div  class="progressBoardContent">
+      <div class="mdl-card mdl-shadow--2dp custom">
+        <div class="mdl-card__title mdl-card--expand">
+          <h4 class="mdl-card__title-text navyBlueColor">Water filling in progress...</h4>
+        </div>
+        <div class="mdl-card__supporting-text contentBoard">
+         <img src="./assets/temp_rising.gif" /> 
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+          <button id="terminateProcessFilling" class="mdl-button">
+            <i class="material-icons pinkColor">not_interested</i> <span>&nbsp;Terminate process</span>
+          </button>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+   <!--end of water filling board-->
+  <!--- overlay -->
+  <div class="overlay">
+    <div class="overlay-flex-wrapper">
+      <div id="overlay-settings">
+
+        <div class=" mdl-card mdl-shadow--2dp pinkColor">
+          <div class="mdl-card__title">
+            <i class="material-icons navyBlueColor">thermostat</i>Set Temperature °C
+          </div>
+          <div class="mdl-card__actions">
+            <p style="position: relative;" >
+              <input class="mdl-slider mdl-js-slider" type="range" id="s1" min="10" max="22" value="17.00" step="any">
+              <output class="bubble"></output>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<!---end of overlay -->
+<!--- menu bar -->
+<div class="bar">
+  <div class="wrapper">
+    <button id="demo-menu-lower-right" style="margin-left:93%;"
+        class="mdl-button mdl-js-button mdl-button--icon">
+            <i class="material-icons navyBlueColor" style="font-size: 2.1rem;">settings</i>
+    </button>
+  </div>
+</div>
+<!---end of menu bar -->
+<!-- info chips-->
+<div class="infoChips">
+  <p id='info-desire-temp' class="mdl-chip--contact pinkColorBorder">
+    <span >Desire Temperature</span>
+    <span id='desireTemperatureInfo' class="pinkColorBg">34.44&#xb0;C</span>
+  </p>
+  <p id='info-current-temp' class=" mdl-chip--contact navyBlueColorBorder">
+    <span >Current Temperature</span>
+    <span id='currentTemperatureInfo' class="navyBlueColorBg">34.44</span>
+  </p>
+</div>
+<!--end of info chips-->
+<!--- main content-->
+<div class="background">
+      <div id='waterRefilingButton' class="front-card  mdl-shadow--2dp pinkColor">
+        <div class="mdl-card__title">
+          <i class="material-icons navyBlueColor icon-big">format_color_fill</i>
+        </div>
+        <div class="mdl-card__title">
+          <h3 class="navyBlueColor">water re-filling</h3>
+        </div>
+      </div>
+    <div id="heatingButton" class="front-card mdl-shadow--2dp pinkColor">
+      <div class="mdl-card__title">
+        <i class="material-icons pinkColor icon-big">device_thermostat</i>
+      </div>
+      <div class="mdl-card__title">
+        <h3 class="pinkColor">water heating</h3>
+      </div>
+    </div>
+  </div>
+  <!---end of main content-->   
+</body>
+</html>
+
