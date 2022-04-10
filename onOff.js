@@ -85,15 +85,12 @@ const runOnOffWithTimer = async (
     else if(Array.isArray(callbackOn)) {
       //chaining promises callback max 4 fns
       (async () => {
-        let r0;
-        let r1;
-        let r2
-        let r3
-        r0 = await callbackOn[0]()
-        if(callbackOn[1]) r1 = await callbackOn[1](r0)
-        if(callbackOn[2]) r2 = await callbackOn[2](r1)
-        if(callbackOn[3]) r3 = await callbackOn[3](r2)
-        debug(`is ON !! chaing callbackOn result [fn1,fn2,fn3,fn4]: ${r0},${r1},${r2},${r3}`);
+        let results = {};
+        results['r0']= await callbackOn[0]()
+        if(callbackOn[1]) results['r1']= await callbackOn[1](results['r0'])
+        if(callbackOn[2]) results['r2']= await callbackOn[2](results['r1'])
+        if(callbackOn[3]) results['r3']= await callbackOn[3](results['r2'])
+        debug(`is ON !! chaing callbackOn result: ${JSON.stringify(results)}`);
       })()
     }
     //regular function
