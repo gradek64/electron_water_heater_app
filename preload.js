@@ -1,5 +1,6 @@
 const { debug } = require('./debug');
 const { setBubble } = require('./setRangeInputBadge');
+const {startHeatingProcess,stopHeatingProcess} = require('./heatingWaterProcess')
 
 window.addEventListener('DOMContentLoaded', () => {
   const replaceText = (selector, text) => {
@@ -25,9 +26,14 @@ window.addEventListener('DOMContentLoaded', () => {
   const overlay = document.querySelector('.overlay') || null;
   const overlayContent = document.querySelector('#overlay-settings') || null;
   const outsideOverlay =
-    document.querySelector('.overlay-flex-wrapper') || null;
+    document.querySelector('.overlay-flex-wrapper')
+     || null;
 
-  const positionModal = (side = 'right', clickPosition) => {
+  //chipsInfo on top
+  document.getElementById('info-current-temp').style.display='none'
+
+  
+     const positionModal = (side = 'right', clickPosition) => {
     const overlayContentWidth = overlayContent.clientWidth;
     switch (side) {
       case 'right':
@@ -72,6 +78,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
   heatingButton.addEventListener('click', () => {
     heatingBoard.style.display = 'block';
+
+    startHeatingProcess()
   });
 
   /***** open water filling board *****/
@@ -86,7 +94,12 @@ window.addEventListener('DOMContentLoaded', () => {
   const terminateProcess = () => {
     heatingBoard.style.display = 'none';
     waterFillingBoard.style.display = 'none';
+
+    stopHeatingProcess()
+   
+    //terminateScript()
   };
+
   const terminateProcessHeating =
     document.getElementById('terminateProcessHeating') || null;
   const terminateProcessFilling =

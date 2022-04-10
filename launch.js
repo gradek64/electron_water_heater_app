@@ -9,7 +9,10 @@ function createWindow () {
       preload: path.join(__dirname, 'preload.js')
     }
   })
-
+ 
+  //uncomment for debuggig on raspby
+  win.webContents.openDevTools()
+  
   win.loadFile('template.html')
 }
 

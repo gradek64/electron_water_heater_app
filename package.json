@@ -6,6 +6,8 @@
     "main": "launch.js",
     "scripts": {
         "start": "electron .",
+        "onOff": "DEBUG=true node onOff.js",
+        "readTemp": "DEBUG=true node readWaterTemperature.js",
         "start:debug": "DEBUG=true electron ."
     },
     "devDependencies": {
