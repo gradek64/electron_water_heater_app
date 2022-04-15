@@ -87,9 +87,9 @@ const runOnOffWithTimer = async (
       (async () => {
         let results = {};
         results['r0']= await callbackOn[0]()
-        if(callbackOn[1]) results['r1']= await callbackOn[1](results['r0'])
-        if(callbackOn[2]) results['r2']= await callbackOn[2](results['r1'])
-        if(callbackOn[3]) results['r3']= await callbackOn[3](results['r2'])
+        if(callbackOn[1]) results['r1']= await callbackOn[1](results)
+        if(callbackOn[2]) results['r2']= await callbackOn[2](results)
+        if(callbackOn[3]) results['r3']= await callbackOn[3](results)
         debug(`is ON !! chaing callbackOn result: ${JSON.stringify(results)}`);
       })()
     }
@@ -122,7 +122,8 @@ process.on('SIGINT', () => {
 
 
 //tests below
-const test0 = async() =>{
+
+/*const test0 = async() =>{
   console.log('first async')
   return Promise.resolve(5)
 }
@@ -131,8 +132,9 @@ const test = async (p)=> {
   return Promise.resolve(p+5)
 }
 const regularFn = () => console.log('regular fn')
+*/
 
 //uncomment when U want to debug this file
-runOnOffWithTimer({delay:1,callbackOn:[test0,test]})
+//runOnOffWithTimer({delay:1,callbackOn:[test0,test]})
 
 module.exports = { runOnOff, runOnOffWithTimer, terminateScript };

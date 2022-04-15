@@ -1,3 +1,4 @@
+// <!--look for: HERE WHERE U DEFINE RANGE and DEFAULT TEMPERATURE in template.html-->
 function setBubble(range, bubble, bubbleSize) {
   const { value, max, min } = range;
   const minValue = min ? min : 0;
@@ -23,6 +24,7 @@ function setBubble(range, bubble, bubbleSize) {
 
   //display desireTemperature
   const temperature = Number(value).toFixed(2);
+  global.SET_TEMPERATURE = temperature;
   const desireTemperature = document.getElementById('desireTemperature');
   const desireTemperatureInfo = document.getElementById(
     'desireTemperatureInfo',

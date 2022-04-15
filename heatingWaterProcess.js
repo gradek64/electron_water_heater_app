@@ -1,5 +1,7 @@
 const { runOnOffWithTimer ,terminateScript} = require('./onOff')
 const {readTemperature} = require('./readWaterTemperature')
+const {compareTemperature} = require('./compareTemperature')
+const {turnGPIOPinOnOff} = require('./turnGPIOPinOnOff')
 
 
  const startHeatingProcess =  async () =>{
@@ -23,13 +25,17 @@ const {readTemperature} = require('./readWaterTemperature')
     4. update UI
 
 */
-const ww = await runOnOffWithTimer({delay:2,callbackOn:readTemperature})
-console.log('ww',ww)
+runOnOffWithTimer(
+    {
+    delay:2,
+    callbackOn:[readTemperature,compareTemperature,turnGPIOPinOnOff]
+    })
+
 }
 
  const  stopHeatingProcess =  () =>{
  //on turn off no need for any callback
- runOnOffWithTimer({run:false})
+ runOnOffWithTimer({run:false,callbackOn:()=>console.log('water heating terminated')})
 
 }
 
