@@ -1,5 +1,6 @@
 const { debug } = require('./debug');
 const {terminateScript} = require('./onOff')
+const {activePins} = require('./setActivePins')
 
 // This method is part of chained promise
 // every promise will received promise from
@@ -13,6 +14,9 @@ const {terminateScript} = require('./onOff')
 //vreads alue of prvious Promise 2 so r1
 // r1:{...}}
 let previouslySet
+
+//pins for heater water
+const {startHeating}= activePins.heatingWater
 async function turnGPIOPinOnOff(previousPromise) {
   try {
  
@@ -24,14 +28,15 @@ async function turnGPIOPinOnOff(previousPromise) {
 
     if(shouldTurnOn===true) {
         previouslySet=shouldTurnOn
-        debug('GPIO pin number On','blue')}
+        debug(`GPIO:${startHeating.pinNumber}:${startHeating.type} On`,'blue')
+    }
     else if(shouldTurnOn===false) {
         previouslySet=shouldTurnOn
-        debug('GPIO pin number OFF','blue')
+        debug(`GPIO:${startHeating.pinNumber}:${startHeating.type} Off`,'blue')
     } 
-    else debug(`GPIO pin number same state::${previouslySet}`,'blue')
+    else debug(`GPIO:${startHeating.pinNumber}:${startHeating.type} same state::${previouslySet}`,'blue')
 
-    return {GPIO_12:shouldTurnOn}
+    return {[startHeating.pinNumber]:shouldTurnOn}
 
   } catch (error) {
     // stop pi commands print error terminate GPIO pins work and

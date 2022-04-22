@@ -1,5 +1,6 @@
 const fs= require('fs')
 const { debug } = require('./debug');
+const {updateUI} = require('./updateUI')
 const {terminateScript} = require('./onOff')
 
 // 1.make sure you raspi has wire_1 enabled in configuration first
@@ -32,9 +33,10 @@ async function readTemperature() {
     debug(`{celcius:${celsius},fahrenheit:${fahrenheit}},SET_TEMPERATURE:${SET_TEMPERATURE}`);
 
     //update UI
-    document.getElementById('info-current-temp').style.display='block'
-    document.getElementById('currentTemperature').innerHTML = celsius
-    document.getElementById('currentTemperatureInfo').innerHTML = celsius
+    updateUI('currentTemperature',`${celsius}&#xb0;C`)
+    //front chips board
+    updateUI('info-current-temp','',true)
+    updateUI('currentTemperatureInfo',`${celsius}&#xb0;C`)
     
     
     return { celsius, fahrenheit };

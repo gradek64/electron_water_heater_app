@@ -1,6 +1,7 @@
 const { debug } = require('./debug');
 const { setBubble } = require('./setRangeInputBadge');
 const {startHeatingProcess,stopHeatingProcess} = require('./heatingWaterProcess')
+const {updateUI} = require('./updateUI')
 
 window.addEventListener('DOMContentLoaded', () => {
   const replaceText = (selector, text) => {
@@ -30,7 +31,8 @@ window.addEventListener('DOMContentLoaded', () => {
      || null;
 
   //chipsInfo on top
-  document.getElementById('info-current-temp').style.display='none'
+  updateUI('info-current-temp','',false)
+  //document.getElementById('info-current-temp').style.display='none'
 
   
      const positionModal = (side = 'right', clickPosition) => {
