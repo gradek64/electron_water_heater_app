@@ -149,11 +149,12 @@ window.addEventListener('DOMContentLoaded', () => {
     if (previousValue == 'true') {
         this.checked = false;
         e.target.setAttribute('previousChecked', this.checked);
+        global.START_HEATING_AFTER_FILLING = true;
     }
     else {
         this.checked = true;
         e.target.setAttribute('previousChecked', this.checked);
     }
-    console.log(this.checked)
+    global.START_HEATING_AFTER_FILLING = this.checked;
   })
 });
