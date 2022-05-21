@@ -53,9 +53,28 @@
   height: 100%;
   width: 100%;
 }
+/********* overlay settings ***********/
 #overlay-settings {
   position: absolute;
+  
+
 }
+#overlay-settings div.setting {
+  border:1px dashed palevioletred;
+  border-radius: 5px;
+  height:100px;
+  padding:5px;
+  margin-bottom: 10px;
+}
+#overlay-settings div.setting:nth-child(1) {
+  height:150px;
+}
+#overlay-settings div.setting:nth-child(2) {
+  height:27px;
+  padding-top: 7px;
+  padding-left: 15px;
+}
+/*********end of overlay settings ***********/
 
 /*** heatingBoard overlay ***/
 .mdl-card.custom {
@@ -114,6 +133,8 @@
 .icon-big {
   font-size: 8rem;
 }
+
+
 
 /********* component state ***********/
 .disabled,

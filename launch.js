@@ -16,7 +16,10 @@ function createWindow () {
   win.loadFile('template.html')
 }
 
+
 app.whenReady().then(() => {
+  // allow third-party libraries
+  app.allowRendererProcessReuse = false
   createWindow()
 
   app.on('activate', () => {

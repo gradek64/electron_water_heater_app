@@ -72,15 +72,23 @@
       <div id="overlay-settings">
 
         <div class=" mdl-card mdl-shadow--2dp pinkColor">
-          <div class="mdl-card__title">
-            <i class="material-icons navyBlueColor">thermostat</i>Set Temperature °C
-          </div>
+         
           <div class="mdl-card__actions">
-            <p style="position: relative;" >
+            <div class='setting' style="position: relative;" >
               <!-- HERE WHERE U DEFINE RANGE and DEFAULT TEMPERATURE ß-->
+              <div class="mdl-card__title">
+                <i class="material-icons navyBlueColor">thermostat</i>Set Temperature °C
+              </div>
               <input class="mdl-slider mdl-js-slider" type="range" id="s1" min="20" max="40" value="25.00" step="any">
               <output class="bubble"></output>
-            </p>
+            </div>
+            <div class='setting' style="position: relative;" >
+              <!-- HERE WHERE U DEFINE RANGE and DEFAULT TEMPERATURE ß-->
+              <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-start-heating-filling">
+                <input type="checkbox" id="switch-start-heating-filling" data-previousChecked class="mdl-switch__input" >
+                <span class="mdl-switch__label">Start heating after filling</span>
+              </label>
+            </div>
           </div>
         </div>
       </div>

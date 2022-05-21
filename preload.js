@@ -1,6 +1,7 @@
 const { debug } = require('./debug');
 const { setBubble } = require('./setRangeInputBadge');
 const {startHeatingProcess,stopHeatingProcess} = require('./heatingWaterProcess')
+const { startFillingWater } = require('./startFillingWater')
 const {updateUI} = require('./updateUI')
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -79,6 +80,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const heatingBoard = document.getElementById('heatingBoard') || null;
 
   heatingButton.addEventListener('click', () => {
+    console.log('water heating click board')
     heatingBoard.style.display = 'block';
 
     startHeatingProcess()
@@ -90,6 +92,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
   waterRefilingButton.addEventListener('click', () => {
     waterFillingBoard.style.display = 'block';
+
+    startFillingWater()
   });
 
   /***** close board *****/
@@ -133,4 +137,23 @@ window.addEventListener('DOMContentLoaded', () => {
     debug(`defaultValue ${defaultValue}`);
     debug(`currentValue ${currentValue}`);
   });
+
+  //listener for start heating after filling switch
+  const startHeatingAfterFillingSwitch = document.getElementById('switch-start-heating-filling');
+  //set default value from global settings
+  startHeatingAfterFillingSwitch.checked = START_HEATING_AFTER_FILLING
+  startHeatingAfterFillingSwitch.setAttribute('previousChecked', startHeatingAfterFillingSwitch.checked);
+
+  startHeatingAfterFillingSwitch.addEventListener('change',(e)=>{
+    var previousValue = e.target.getAttribute('previousChecked');
+    if (previousValue == 'true') {
+        this.checked = false;
+        e.target.setAttribute('previousChecked', this.checked);
+    }
+    else {
+        this.checked = true;
+        e.target.setAttribute('previousChecked', this.checked);
+    }
+    console.log(this.checked)
+  })
 });

@@ -29,6 +29,7 @@ function setBubble(range, bubble, bubbleSize) {
   //display desireTemperature
   const temperature = Number(value).toFixed(2);
   global.SET_TEMPERATURE = temperature;
+  global.START_HEATING_AFTER_FILLING = true;
 
   updateUI('desireTemperature',`${parseFloat(temperature).toFixed(1)}&#xb0;C`)
   updateUI('desireTemperatureInfo',`${parseFloat(temperature).toFixed(1)}&#xb0;C`)
