@@ -26,10 +26,12 @@ function setBubble(range, bubble, bubbleSize) {
     draggableSize - newValue * rangeFromPositiveNegativeSize
   }px))`;
 
+  //SETTINGS needs to be move to seperate file
   //display desireTemperature
   const temperature = Number(value).toFixed(2);
   global.SET_TEMPERATURE = temperature;
   global.START_HEATING_AFTER_FILLING = true;
+  global.WATER_IS_FULL = false;
 
   updateUI('desireTemperature',`${parseFloat(temperature).toFixed(1)}&#xb0;C`)
   updateUI('desireTemperatureInfo',`${parseFloat(temperature).toFixed(1)}&#xb0;C`)

@@ -1,7 +1,7 @@
 const { debug } = require('./debug');
 const { setBubble } = require('./setRangeInputBadge');
 const {startHeatingProcess,stopHeatingProcess} = require('./heatingWaterProcess')
-const { startFillingWater } = require('./startFillingWater')
+const { startStopFillingWater } = require('./startStopFillingWater')
 const {updateUI} = require('./updateUI')
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -33,9 +33,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   //chipsInfo on top
   updateUI('info-current-temp','',false)
-  //document.getElementById('info-current-temp').style.display='none'
 
-  
      const positionModal = (side = 'right', clickPosition) => {
     const overlayContentWidth = overlayContent.clientWidth;
     switch (side) {
@@ -77,42 +75,44 @@ window.addEventListener('DOMContentLoaded', () => {
   /****** end of modal ******/
 
   /***** open heating board *****/
-  const heatingBoard = document.getElementById('heatingBoard') || null;
-
   heatingButton.addEventListener('click', () => {
-    console.log('water heating click board')
-    heatingBoard.style.display = 'block';
-
+    updateUI('heatingBoard','',true)
     startHeatingProcess()
   });
 
   /***** open water filling board *****/
-  const waterFillingBoard =
-    document.getElementById('waterFillingBoard') || null;
-
   waterRefilingButton.addEventListener('click', () => {
-    waterFillingBoard.style.display = 'block';
+    updateUI('waterFillingBoard','',true)
+    startStopFillingWater()
+  });
 
-    startFillingWater()
+  /***** open water level board *****/
+  const confirmWaterLevelBttn =
+    document.getElementById('confirmWaterLevelBttn') || null;
+
+  confirmWaterLevelBttn.addEventListener('click', () => {
+    global.WATER_IS_FULL = true;  
+    updateUI('waterLevelBoard','',false);
+    updateUI('heatingBoard','',true);
+
+    startHeatingProcess();
   });
 
   /***** close board *****/
   const terminateProcess = () => {
-    heatingBoard.style.display = 'none';
-    waterFillingBoard.style.display = 'none';
+    updateUI('heatingBoard','',false)
+    updateUI('waterFillingBoard','',false)
+    updateUI('waterLevelBoard','',false)
 
     stopHeatingProcess()
-   
-    //terminateScript()
+    startStopFillingWater({stop:true})
   };
+    const terminateProcessButtons =
+    document.querySelectorAll('.terminateProcess') || null;
 
-  const terminateProcessHeating =
-    document.getElementById('terminateProcessHeating') || null;
-  const terminateProcessFilling =
-    document.getElementById('terminateProcessFilling') || null;
-
-  terminateProcessHeating.addEventListener('click', terminateProcess);
-  terminateProcessFilling.addEventListener('click', terminateProcess);
+    terminateProcessButtons.forEach((bttn)=>{
+      bttn.addEventListener('click', terminateProcess);
+    })
 
   //range input
   const rangeTemperature = document.getElementById('s1');

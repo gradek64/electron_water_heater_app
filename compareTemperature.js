@@ -17,7 +17,7 @@ async function compareTemperature(previousPromise) {
   try {
 
     const {r0} = previousPromise
-    if(r0===undefined) throw new Error('{r0} not defined')
+    if(r0===undefined) throw new Error('{r0} not defined in compareTemperature file')
     //from global.SET_TEMPERATURE
     const desireTemperature = SET_TEMPERATURE
 

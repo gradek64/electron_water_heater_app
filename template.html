@@ -37,7 +37,7 @@
   
         </div>
         <div class="mdl-card__actions mdl-card--border">
-          <button id="terminateProcessHeating" class="mdl-button">
+          <button id="terminateProcessHeating" class="mdl-button terminateProcess">
             <i class="material-icons pinkColor">not_interested</i> <span>&nbsp;Terminate process</span>
           </button>
          
@@ -57,7 +57,7 @@
          <img src="./assets/temp_rising.gif" /> 
         </div>
         <div class="mdl-card__actions mdl-card--border">
-          <button id="terminateProcessFilling" class="mdl-button">
+          <button id="terminateProcessFilling" class="mdl-button terminateProcess">
             <i class="material-icons pinkColor">not_interested</i> <span>&nbsp;Terminate process</span>
           </button>
          
@@ -66,6 +66,28 @@
     </div>
   </div>
    <!--end of water filling board-->
+  <!-- check water level board-->
+  <div id="waterLevelBoard" class="progressBoard navyBlueColorBg" >
+    <div  class="progressBoardContent">
+      <div class="mdl-card mdl-shadow--2dp">
+        <div class="mdl-card__title mdl-card--expand">
+          <h4 class="mdl-card__title-text navyBlueColor">Is your water tank full ?</h4>
+        </div>
+        <div class='setting waterLevelContent' style="position: relative;">
+          <!-- HERE WHERE U DEFINE TOGGLE FOR SET FULL TANK (FORCE)-->
+          <button id="confirmWaterLevelBttn" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
+            Confirm Full Tank
+          </button>
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+          <button id="terminateProcess" class="mdl-button terminateProcess">
+            <i class="material-icons pinkColor">not_interested</i> <span>&nbsp;Terminate process</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+   <!--end of water level board-->
   <!--- overlay -->
   <div class="overlay">
     <div class="overlay-flex-wrapper">
@@ -83,7 +105,7 @@
               <output class="bubble"></output>
             </div>
             <div class='setting' style="position: relative;" >
-              <!-- HERE WHERE U DEFINE RANGE and DEFAULT TEMPERATURE ß-->
+              <!-- HERE WHERE U DEFINE TOGGLE FOR START HEATING AFTER FILLING-->
               <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-start-heating-filling">
                 <input type="checkbox" id="switch-start-heating-filling" data-previousChecked class="mdl-switch__input" >
                 <span class="mdl-switch__label">Start heating after filling</span>

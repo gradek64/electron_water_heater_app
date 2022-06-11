@@ -1,7 +1,9 @@
-const { runOnOffWithTimer ,terminateScript} = require('./onOff')
+const { runOnOffWithTimer } = require('./onOff')
 const {readTemperature} = require('./readWaterTemperature')
 const {compareTemperature} = require('./compareTemperature')
 const {turnGPIOPinOnOff} = require('./turnGPIOPinOnOff')
+const {updateUI} = require('./updateUI')
+
 
 
  const startHeatingProcess =  async () =>{
@@ -25,6 +27,16 @@ const {turnGPIOPinOnOff} = require('./turnGPIOPinOnOff')
     4. update UI
 
 */
+
+//check if water level is full before heating proccess
+// and all promises kick off 
+console.log('global.WATER_IS_FULL',global.WATER_IS_FULL)
+if(global.WATER_IS_FULL === false){
+    updateUI('heatingBoard','',false)
+    updateUI('waterLevelBoard','',true)
+    return
+  }
+
 runOnOffWithTimer(
     {
     delay:2,
@@ -33,10 +45,10 @@ runOnOffWithTimer(
 
 }
 
- const  stopHeatingProcess =  () =>{
+ const stopHeatingProcess = () => {
  //on turn off no need for any callback
  runOnOffWithTimer({run:false,callbackOn:()=>console.log('water heating terminated')})
-
+ global.WATER_IS_FULL = false;
 }
 
 module.exports = { startHeatingProcess, stopHeatingProcess};

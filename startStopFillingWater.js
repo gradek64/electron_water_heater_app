@@ -1,5 +1,6 @@
 const { poll } = require('rpio');
 var rpio = require('rpio');
+const {updateUI}= require('./updateUI')
 
 /*
 If running a newer Raspbian release, 
@@ -11,7 +12,19 @@ dtoverlay=gpio-no-irq
 above in /boot/config.txt
 */
 
-const startFillingWater = () => {
+//set this metod the way it can also
+//teminate the process (turn off and reset pin)
+const startStopFillingWater = ({stop}={stop:false}) => {
+
+       console.log('stop',stop)
+       if(stop === true){
+          //reset pin
+          //rpio.poll(11, null)
+          //set global notification (terminated)
+          global.WATER_IS_FULL = false;   
+          console.log('return stop',stop)
+          return 
+       }
 
         rpio.open(11, rpio.INPUT, rpio.PULL_DOWN);
         console.log('Pin 11 initial ' + (rpio.read(11) ? 'high' : 'low'));
@@ -45,15 +58,17 @@ const startFillingWater = () => {
                 //imidiate run
                 setTimeout(()=>{
                  console.log('aborted')
-                 if(isConnected)  rpio.poll(pin, null)
+                 if(isConnected) {
+                        //reset pin
+                        rpio.poll(pin, null)
+                        //set global notification
+                        global.WATER_IS_FULL = true;
+                 } 
 
                  //when global START_HEATING_AFTER_FILLING = true
                  //start heating immidiatelly
                  if(global.START_HEATING_AFTER_FILLING){
-                        //put into global
-                        const waterFillingBoard =
-                        document.getElementById('waterFillingBoard') || null;
-                        waterFillingBoard.style.display = 'none';
+                        updateUI('waterFillingBoard','',false)
                         const heatingButton = document.getElementById('heatingButton') || null;
                         heatingButton.click()
                         console.log('heatingBoard',heatingButton)
@@ -72,4 +87,4 @@ const startFillingWater = () => {
         pollcb(11)
 }
 
-module.exports = { startFillingWater }
+module.exports = { startStopFillingWater }

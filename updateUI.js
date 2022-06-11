@@ -17,9 +17,6 @@ const updateUI = (elementID,value,show) => {
 
     if(show===true) elements[elementID].style.display='block';
     if(show===false) elements[elementID].style.display='none';
-
-
-
 }
 
 

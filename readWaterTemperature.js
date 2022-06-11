@@ -1,4 +1,4 @@
-const fs= require('fs')
+const fs = require('fs')
 const { debug } = require('./debug');
 const {updateUI} = require('./updateUI')
 const {terminateScript} = require('./onOff')

@@ -76,6 +76,24 @@
 }
 /*********end of overlay settings ***********/
 
+/*** water level board **/
+
+.waterLevelContent {
+  position: relative;
+  height: 156px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.waterLevelContent > button {
+  width: 70%;
+  height: 40%;
+  font-size: 1.2rem;
+}
+
+/***end of water level board **/
+
 /*** heatingBoard overlay ***/
 .mdl-card.custom {
   width: 76%;
