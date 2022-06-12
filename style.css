@@ -94,6 +94,16 @@
 
 /***end of water level board **/
 
+/*** full tank info chip ***/
+#fullTankInfo {
+  display: table;
+  background: white;
+  margin: 0 auto;
+  font-size: 25px;
+}
+
+/*** full tank info chip ***/
+
 /*** heatingBoard overlay ***/
 .mdl-card.custom {
   width: 76%;

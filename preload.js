@@ -86,6 +86,9 @@ window.addEventListener('DOMContentLoaded', () => {
     startStopFillingWater()
   });
 
+  /*** water tank full info chip**/
+  updateUI('fullTankInfo','',false)
+
   /***** open water level board *****/
   const confirmWaterLevelBttn =
     document.getElementById('confirmWaterLevelBttn') || null;

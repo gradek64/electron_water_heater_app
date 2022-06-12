@@ -48,7 +48,13 @@ runOnOffWithTimer(
  const stopHeatingProcess = () => {
  //on turn off no need for any callback
  runOnOffWithTimer({run:false,callbackOn:()=>console.log('water heating terminated')})
+
+ /*this has to be reset cause
+ //there no way to check if pin is set hight
+ //unless starting filling water method is called
+ //again better mannualy confirm ?*/
  global.WATER_IS_FULL = false;
+ 
 }
 
 module.exports = { startHeatingProcess, stopHeatingProcess};
