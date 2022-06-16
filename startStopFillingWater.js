@@ -5,7 +5,7 @@ const {debug} = require('./debug')
 
 //import pin setup from config
 const { setPins }= require('./configs/config')
-const {mode,pinNumber} = setPins.water_level_check;
+const {setup,pinNumber} = setPins.water_level_check;
 
 let isConnected = false
 /*
@@ -29,7 +29,7 @@ const startStopFillingWater = ({stop}={stop:false}) => {
 		return 
 	}
 
-	rpio.open(pinNumber, rpio[mode], rpio.PULL_DOWN);
+	rpio.open(pinNumber, rpio[setup], rpio.PULL_DOWN);
 	debug(`Pin ${pinNumber} is initial ${rpio.read(pinNumber) ? 'high' : 'low'}`,'blue');
 
 	//set the water pump pin high

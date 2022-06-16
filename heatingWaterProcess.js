@@ -3,6 +3,8 @@ const {readTemperature} = require('./readWaterTemperature')
 const {compareTemperature} = require('./compareTemperature')
 const {turnGPIOPinOnOff} = require('./turnGPIOPinOnOff')
 const {updateUI} = require('./updateUI')
+const {turnPins} = require('./turnGPIOPinOnOff')
+
 
 
 
@@ -46,6 +48,8 @@ runOnOffWithTimer(
 }
 
  const stopHeatingProcess = () => {
+
+    turnPins({LOW_HIGH:'LOW'})
  //on turn off no need for any callback
  runOnOffWithTimer({run:false,callbackOn:()=>console.log('water heating terminated')})
 
