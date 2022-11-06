@@ -1,6 +1,6 @@
 const fs= require('fs')
-const { debug } = require('./debug');
-const {terminateScript} = require('./onOff')
+const { debug } = require('../debug');
+const {terminateScript} = require('../onOff')
 
 // 1.this method is part of chained promise
 // every promise will received promise from

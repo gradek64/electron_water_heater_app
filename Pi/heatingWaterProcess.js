@@ -1,9 +1,9 @@
 const { runOnOffWithTimer } = require('./onOff')
-const {readTemperature} = require('./readWaterTemperature')
-const {compareTemperature} = require('./compareTemperature')
-const {turnGPIOPinOnOff} = require('./turnGPIOPinOnOff')
-const {updateUI} = require('./updateUI')
-const {turnPins} = require('./turnGPIOPinOnOff')
+const {readTemperature} = require('./PromiseBased/readWaterTemperature')
+const {compareTemperature} = require('./PromiseBased/compareTemperature')
+const {turnGPIOPinOnOff} = require('./PromiseBased/turnGPIOPinOnOff')
+const {updateUI} = require('../Ui/updateUI')
+const {turnPins} = require('./PromiseBased/turnGPIOPinOnOff')
 
 
 

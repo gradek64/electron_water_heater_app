@@ -1,7 +1,7 @@
 const fs = require('fs')
-const { debug } = require('./debug');
-const {updateUI} = require('./updateUI')
-const {terminateScript} = require('./onOff')
+const { debug } = require('../../debug');
+const {updateUI} = require('../../Ui/updateUI')
+const {terminateScript} = require('../onOff')
 
 // 1.make sure you raspi has wire_1 enabled in configuration first
 // 2. read the file w1_slave

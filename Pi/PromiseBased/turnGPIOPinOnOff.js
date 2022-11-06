@@ -1,7 +1,7 @@
 const rpio = require('rpio');
 
-const { debug } = require('./debug');
-const {terminateScript} = require('./onOff')
+const { debug } = require('../debug');
+const {terminateScript} = require('../onOff')
 
 // This method is part of chained promise
 // every promise will received promise from
@@ -17,7 +17,7 @@ const {terminateScript} = require('./onOff')
 let previouslySet
 
 //pins for immerse heater
-const { setPins }= require('./configs/config')
+const { setPins }= require('../configs/config')
 const {setup:setup1,pinNumber:pn1} = setPins.immerse_heater_1;
 const {setup:setup2,pinNumber:pn2} = setPins.immerse_heater_2;
 const {setup:setup3,pinNumber:pn3} = setPins.immerse_heater_3;
