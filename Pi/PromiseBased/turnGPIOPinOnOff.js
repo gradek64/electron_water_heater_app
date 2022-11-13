@@ -36,7 +36,7 @@ const turnPins = ({LOW_HIGH}) =>{
     else if(LOW_HIGH === 'LOW' && global.SET_PINS !== 'LOW' ){
       debug(`pin ${pinNumber} turned: ${LOW_HIGH}`,'blue')
       //pins are defined
-      if(rpio[LOW_HIGH]){
+      if(rpio.LOW || rpio.HIGH){
         rpio.close(pinNumber, rpio.PIN_RESET);
         rpio.write(pinNumber,rpio[LOW_HIGH]);
       }
@@ -64,9 +64,9 @@ async function turnGPIOPinOnOff(previousPromise) {
 
     /**display water is heated board based on setTempReached */
     if(setTempReached === true){
-      const {  stopHeatingProccess } = require('../heatingWaterProccess')
+      const {  stopHeatingProccess,getIsHeatedTimeAgo } = require('../heatingWaterProccess')
       updateUI('heatingBoard','',false)
-      updateUI('waterHeatedInfo','',true)
+      getIsHeatedTimeAgo()
       stopHeatingProccess()
     }
     

@@ -133,9 +133,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
   /***** close board *****/
   const terminateProcess = (e) => {
-    console.log('ttt',e.target)
-   
-
     updateUI('heatingBoard','',false)
     updateUI('waterFillingBoard','',false)
     updateUI('waterLevelBoard','',false)

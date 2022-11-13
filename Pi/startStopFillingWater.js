@@ -23,8 +23,8 @@ const startStopFillingWater = ({stop}={stop:false}) => {
 	water_curcuit_closed = false; 
 
 	if(stop === true){
-		//when pin is defined/LOW close the pin and all its events and reset to STATE LOW
-		 if(rpio.LOW){
+		//when pin is defined/LOW/HIGH close the pin and all its events and reset to STATE LOW
+		 if(rpio.LOW || rpio.HIGH){
 			rpio.close(pinNumber, rpio.PIN_RESET);
 			//swich of the pump ideally check if it was low
 			rpio.write(pinWaterPump,rpio.LOW);

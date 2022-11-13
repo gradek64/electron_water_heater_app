@@ -6,14 +6,40 @@ const {updateUI} = require('../Ui/updateUI')
 const {turnPins} = require('./PromiseBased/turnGPIOPinOnOff')
 const { debug } = require('../debug');
 
-const waterIsHeatedTimeAgo = ()=>{
+let seconds = 0
+let minutes = 0
+const runOutTime = 1 //min
+let timer
+const getIsHeatedTimeAgo = (stop=false) => {
+  if(stop===true){
+    if(timer) clearTimeout(timer)
+    updateUI('waterHeatedInfo','',false)
+  }
+const myTimeoutFunction = () =>{
+  seconds++
 
-    setInterval((
+  if(seconds === 59){
+    minutes++
+    seconds = 0
+  }
+  console.log('timer is running')
 
-        //updateTime
-        
+  const formatedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`
+  const formatedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`
+  const  message = minutes < runOutTime ? `Water was heated ${formatedMinutes}:${formatedSeconds} seconds ago`: 'Water is cold .. heat it up again !'
 
-    )=>{},1000) 
+    updateUI('waterHeatedInfo',message,true)
+
+    if(minutes>=runOutTime) {
+      console.log('timer should stop')
+      clearTimeout(timer)
+      return
+    }
+    //repeat
+    timer = setTimeout(myTimeoutFunction, 1000);
+}
+
+myTimeoutFunction()
 }
 
  const startHeatingProccess =  async () =>{
@@ -72,4 +98,4 @@ turnPins({LOW_HIGH:'LOW'})
 
 }
 
-module.exports = { startHeatingProccess, stopHeatingProccess, waterIsHeatedTimeAgo}
+module.exports = { startHeatingProccess, stopHeatingProccess, getIsHeatedTimeAgo}

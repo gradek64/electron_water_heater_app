@@ -8,7 +8,7 @@
         "start": "electron .",
         "onOff": "DEBUG=true node onOff.js",
         "readTemp": "DEBUG=true node readWaterTemperature.js",
-        "===>":"after fresh packages are installed 'npm i' run npm rubuild for electron to update",
+        "===>": "after fresh packages are installed 'npm i' run npm rubuild for electron to update",
         "rebuild": "electron-rebuild -f -w rpio",
         "start:debug": "DEBUG=true electron ."
     },

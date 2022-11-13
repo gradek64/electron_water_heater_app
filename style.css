@@ -108,7 +108,10 @@
   display: table;
   background: white;
   margin: 0 auto;
-  font-size: 25px;
+  padding-left: 6px;
+}
+#waterHeatedInfo span {
+  font-size: 30px;
 }
 
 /*** full tank info chip ***/
