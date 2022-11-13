@@ -1,4 +1,4 @@
-const { debug } = require('./debug');
+const { debug } = require('../debug');
 
 //clever promise based python type sleep function to stop the code
 const sleep = (seconds) => {

@@ -30,13 +30,11 @@ async function readTemperature() {
      fahrenheit = (celsius * 1.8 + 32).toFixed(1);
 
     //logging
-    debug(`{celcius:${celsius},fahrenheit:${fahrenheit}},SET_TEMPERATURE:${SET_TEMPERATURE}`);
+    debug(`{celcius:${celsius},fahrenheit:${fahrenheit}},SET_TEMPERATURE_VALUE:${global.SET_TEMPERATURE_VALUE}`);
 
     //update UI
     updateUI('currentTemperature',`${celsius}&#xb0;C`)
-    //front chips board
-    updateUI('info-current-temp','',true)
-    updateUI('currentTemperatureInfo',`${celsius}&#xb0;C`)
+ 
     
     
     return { celsius, fahrenheit };

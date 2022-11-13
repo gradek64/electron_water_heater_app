@@ -10,32 +10,34 @@
 
 */
 
-const setPins = {
-    immerse_heater_1:{
+//Below Pins in general SHOULD NOT be changed
+//those pins are attached to 4 relays
+//If U need to add imerse heater for spare Pin 
+//do it but make sure not other up is using it
+
+const setPins = { 
+    immerse_heaters:
+    [{
         setup:"OUTPUT",
-        pinNumber:28,
-    },
-    immerse_heater_2:{
+        pinNumber:28 },
+        {
         setup:"OUTPUT",
-        pinNumber:26,
-    },
-    immerse_heater_3:{
-        setup:"OUTPUT",
-        pinNumber:24,
-    },
+        pinNumber:26 },
+        {
+            setup:"OUTPUT",
+            pinNumber:24 }
+
+    ],
     water_pump:{
         setup:"OUTPUT",
-        pinNumber:22,
+        pinNumber:22
     },
+    //this pin CAN NOT BE changed
     water_level_check:{
         setup:"INPUT",
-        pinNumber:11,
+        pinNumber:11
     },
-   
 }
 
-const globals ={
 
-}
-
-module.exports = {setPins,globals}
+module.exports = {setPins}

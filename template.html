@@ -96,12 +96,11 @@
         <div class=" mdl-card mdl-shadow--2dp pinkColor">
          
           <div class="mdl-card__actions">
-            <div class='setting' style="position: relative;" >
-              <!-- HERE WHERE U DEFINE RANGE and DEFAULT TEMPERATURE ß-->
+            <div class='setting rangeInputContainer' style="position: relative;" >
+              <!-- HERE WHERE U DEFINE RANGE and DEFAULT TEMPERATURE -->
               <div class="mdl-card__title">
                 <i class="material-icons navyBlueColor">thermostat</i>Set Temperature °C
               </div>
-              <input class="mdl-slider mdl-js-slider" type="range" id="s1" min="20" max="40" value="25.00" step="any">
               <output class="bubble"></output>
             </div>
             <div class='setting' style="position: relative;" >
@@ -110,6 +109,12 @@
                 <input type="checkbox" id="switch-start-heating-filling" data-previousChecked class="mdl-switch__input" >
                 <span class="mdl-switch__label">Start heating after filling</span>
               </label>
+            </div>
+              <div class='setting' style="position: relative;" >
+              <!-- HERE WHERE U DEFINE TOGGLE FOR START HEATING AFTER FILLING-->
+              <button id="resetWaterTankBttn" class="mdl-button mdl-js-button mdl-button--primary">
+                <i class="material-icons navyBlueColor">exposure</i> RESET WATER FULL TANK <span id="waterIsResetted"></span>
+              </button>
             </div>
           </div>
         </div>
@@ -135,19 +140,24 @@
     <span >Desire Temperature</span>
     <span id='desireTemperatureInfo' class="pinkColorBg">34.44&#xb0;C</span>
   </p>
-  <p id='info-current-temp' class=" mdl-chip--contact navyBlueColorBorder">
-    <span >Current Temperature</span>
-    <span id='currentTemperatureInfo' class="navyBlueColorBg">34.44</span>
-  </p>
 </div>
 <!--end of info chips-->
 <!--water tank full info chip-->
+<div class="tank-full-info"> 
 <span id="fullTankInfo" class="mdl-chip mdl-chip--contact ">
   <span class="mdl-chip__contact  mdl-color-text--white">
     <i class="material-icons navyBlueColor icon-small">format_color_fill</i>
   </span>
-  <span class="mdl-chip__text navyBlueColor">Water Tank is FULL, fancy a cold shower or start heating process ? </span>
+  <span class="mdl-chip__text navyBlueColor ">Water Tank is Full ! start heating process ? </span>
 </span>
+<span id="waterHeatedInfo" class="mdl-chip mdl-chip--contact ">
+  <span class="mdl-chip__contact  mdl-color-text--white">
+    <i class="material-icons navyBlueColor icon-small">format_color_fill</i>
+  </span>
+<span class="mdl-chip__text navyBlueColor ">Water has been heated</span>
+</span>
+
+</div>
 <!--end of water tank full info chip-->
 <!--- main content-->
 <div class="background">

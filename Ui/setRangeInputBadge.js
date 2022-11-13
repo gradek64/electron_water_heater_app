@@ -1,5 +1,5 @@
 const {updateUI} = require('./updateUI')
-const { debug } = require('./debug');
+const { debug } = require('../debug');
 
 
 // <!--look for: HERE WHERE U DEFINE RANGE and DEFAULT TEMPERATURE in template.html-->
@@ -27,11 +27,9 @@ function setBubble(range, bubble, bubbleSize) {
   }px))`;
 
   //SETTINGS needs to be move to seperate file
-  //display desireTemperature
-  const temperature = Number(value).toFixed(2);
-  global.SET_TEMPERATURE = temperature;
-  global.START_HEATING_AFTER_FILLING = true;
-  global.WATER_IS_FULL = false;
+  //display desireTemperature 
+  const temperature = Number(value).toFixed(2); //returns string
+  global.SET_TEMPERATURE_VALUE = Number(temperature);
 
   updateUI('desireTemperature',`${parseFloat(temperature).toFixed(1)}&#xb0;C`)
   updateUI('desireTemperatureInfo',`${parseFloat(temperature).toFixed(1)}&#xb0;C`)

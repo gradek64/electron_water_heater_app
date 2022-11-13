@@ -1,42 +1,56 @@
 const rpio = require('rpio');
 
-const { debug } = require('../debug');
+const { debug } = require('../../debug');
 const {terminateScript} = require('../onOff')
-
+const {updateUI}= require('../../Ui/updateUI')
 // This method is part of chained promise
 // every promise will received promise from
 // from provious chainined promise
 /*objec structure is 
-    
+  
     previousPromise = {r0:{data},r1:{data}...}
 
 */
 //order matter this is Promise number 3: that
-//vreads alue of prvious Promise 2 so r1
+//reads value of prvious Promise 2 so r1
 // r1:{...}}
 let previouslySet
 
 //pins for immerse heater
-const { setPins }= require('../configs/config')
-const {setup:setup1,pinNumber:pn1} = setPins.immerse_heater_1;
-const {setup:setup2,pinNumber:pn2} = setPins.immerse_heater_2;
-const {setup:setup3,pinNumber:pn3} = setPins.immerse_heater_3;
+const { setPins }= require('../../configs/config');
+const immerse_heaters_pins = setPins.immerse_heaters;
+
 
 /*
  * Set the initial state to low.  The state is set prior to the pin
  * being actived, so is safe for devices which require a stable setup.
  */
-rpio.open(pn1, rpio[setup1], rpio.LOW);
-rpio.open(pn2, rpio[setup2], rpio.LOW);
-rpio.open(pn3, rpio[setup3], rpio.LOW);
-
-const pinsSet = [pn1,pn2,pn3]
 
 const turnPins = ({LOW_HIGH}) =>{
-  pinsSet.forEach(pin => {
-    rpio.write(pin,rpio[LOW_HIGH]);
-  });
-  debug(`GPIO: ${pinsSet.map((pin)=>`${pin} `)} ==> ${ LOW_HIGH === 'HIGH' ? 'HIGH:on': 'LOW:off' }`,'blue')
+  immerse_heaters_pins.forEach( ({pinNumber, setup},index) => {
+    if(LOW_HIGH === 'HIGH' && global.SET_PINS !== 'HIGH' ){
+      debug(`pin ${pinNumber} turned: ${LOW_HIGH}`,'blue')
+      rpio.open(pinNumber, rpio[setup], rpio.LOW);
+      rpio.write(pinNumber,rpio[LOW_HIGH]);
+    }
+    else if(LOW_HIGH === 'LOW' && global.SET_PINS !== 'LOW' ){
+      debug(`pin ${pinNumber} turned: ${LOW_HIGH}`,'blue')
+      //pins are defined
+      if(rpio[LOW_HIGH]){
+        rpio.close(pinNumber, rpio.PIN_RESET);
+        rpio.write(pinNumber,rpio[LOW_HIGH]);
+      }
+    } else {
+      debug(`pin ${pinNumber} stays same: ${LOW_HIGH}`,'blue')
+    }
+    
+    //set LOW when all pis for heating are set
+    if(index === immerse_heaters_pins.length - 1){
+      global.SET_PINS = LOW_HIGH
+    } 
+   
+  })
+  debug(`GPIO: ${immerse_heaters_pins.map(({pinNumber})=>`${pinNumber}`)} ==> ${ LOW_HIGH === 'HIGH' ? 'HIGH:on': 'LOW:off' }`,'blue')
 }
 
 async function turnGPIOPinOnOff(previousPromise) {
@@ -45,10 +59,19 @@ async function turnGPIOPinOnOff(previousPromise) {
     const {r1} = previousPromise
     if(r1===undefined) throw new Error('{r1} not defined')
 
-    const { shouldTurnOn } = r1
-    if(shouldTurnOn===undefined) throw new Error('{r1:{shouldTurnOn:true|false}} not defined')
+    const { shouldTurnOn, setTempReached } = r1
+    if( shouldTurnOn === undefined ) throw new Error('{r1:{shouldTurnOn:true|false}} not defined')
 
-    if(shouldTurnOn===true) {
+    /**display water is heated board based on setTempReached */
+    if(setTempReached === true){
+      const {  stopHeatingProccess } = require('../heatingWaterProccess')
+      updateUI('heatingBoard','',false)
+      updateUI('waterHeatedInfo','',true)
+      stopHeatingProccess()
+    }
+    
+
+    if(shouldTurnOn === true) {
         previouslySet=shouldTurnOn
         turnPins({LOW_HIGH:'HIGH'})
     }
@@ -56,7 +79,7 @@ async function turnGPIOPinOnOff(previousPromise) {
         previouslySet=shouldTurnOn
         turnPins({LOW_HIGH:'LOW'})
     } 
-    else debug(`GPIO: ${pinsSet.map((pin)=>`${pin} `)} same state::${previouslySet}`,'blue')
+    else debug(`GPIO: ${immerse_heaters_pins.map(({pinNumber})=>`${pinNumber}`)} same state::${previouslySet}`,'blue')
 
     return {pins:{pinsSet:shouldTurnOn}}
 

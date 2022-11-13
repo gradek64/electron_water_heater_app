@@ -4,13 +4,20 @@ const {compareTemperature} = require('./PromiseBased/compareTemperature')
 const {turnGPIOPinOnOff} = require('./PromiseBased/turnGPIOPinOnOff')
 const {updateUI} = require('../Ui/updateUI')
 const {turnPins} = require('./PromiseBased/turnGPIOPinOnOff')
+const { debug } = require('../debug');
 
+const waterIsHeatedTimeAgo = ()=>{
 
+    setInterval((
 
+        //updateTime
+        
 
- const startHeatingProcess =  async () =>{
+    )=>{},1000) 
+}
+
+ const startHeatingProccess =  async () =>{
 //.1 start measuring water temperature
-
 //callback promise order matters cause every promise 
 //could return a value used for next chained promise
 
@@ -32,12 +39,13 @@ const {turnPins} = require('./PromiseBased/turnGPIOPinOnOff')
 
 //check if water level is full before heating proccess
 // and all promises kick off 
-console.log('global.WATER_IS_FULL',global.WATER_IS_FULL)
 if(global.WATER_IS_FULL === false){
     updateUI('heatingBoard','',false)
     updateUI('waterLevelBoard','',true)
     return
-  }
+ }
+//reset pins state to LOW
+global.SET_PINS = 'LOW'
 
 runOnOffWithTimer(
     {
@@ -47,18 +55,21 @@ runOnOffWithTimer(
 
 }
 
- const stopHeatingProcess = () => {
+ const stopHeatingProccess = () => {
+//reset previus pin state to HIGH
+global.SET_PINS = 'HIGH'
+turnPins({LOW_HIGH:'LOW'})
 
-    turnPins({LOW_HIGH:'LOW'})
  //on turn off no need for any callback
- runOnOffWithTimer({run:false,callbackOn:()=>console.log('water heating terminated')})
+ runOnOffWithTimer({run:false,callbackOn:()=>debug('water heating terminated')})
 
  /*this has to be reset cause
- //there no way to check if pin is set hight
- //unless starting filling water method is called
- //again better mannualy confirm ?*/
+ //there no way to check if pin is set high
+ //unless starting filling water method is called again
+ // better mannualy confirm ?*/
  global.WATER_IS_FULL = false;
- 
+ updateUI('fullTankInfo','',false)
+
 }
 
-module.exports = { startHeatingProcess, stopHeatingProcess};
+module.exports = { startHeatingProccess, stopHeatingProccess, waterIsHeatedTimeAgo}

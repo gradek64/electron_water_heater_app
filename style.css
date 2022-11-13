@@ -56,24 +56,32 @@
 /********* overlay settings ***********/
 #overlay-settings {
   position: absolute;
-  
-
 }
 #overlay-settings div.setting {
-  border:1px dashed palevioletred;
+  border: 1px dashed palevioletred;
   border-radius: 5px;
-  height:100px;
-  padding:5px;
+  height: 100px;
+  padding: 5px;
   margin-bottom: 10px;
 }
 #overlay-settings div.setting:nth-child(1) {
-  height:150px;
+  height: 150px;
 }
 #overlay-settings div.setting:nth-child(2) {
-  height:27px;
+  height: 27px;
   padding-top: 7px;
   padding-left: 15px;
 }
+#overlay-settings div.setting:nth-child(3) {
+  border: none;
+  height: 37px;
+  padding-top: 7px;
+}
+
+#resetWaterTankBttn {
+  padding: 0;
+}
+
 /*********end of overlay settings ***********/
 
 /*** water level board **/
@@ -95,7 +103,8 @@
 /***end of water level board **/
 
 /*** full tank info chip ***/
-#fullTankInfo {
+#fullTankInfo,
+#waterHeatedInfo {
   display: table;
   background: white;
   margin: 0 auto;
@@ -104,6 +113,15 @@
 
 /*** full tank info chip ***/
 
+.tank-full-info {
+  display: flex;
+  width: 90%;
+  justify-content: center;
+  margin: 0 auto;
+}
+.tank-full-info span {
+  font-size: 17px !important;
+}
 /*** heatingBoard overlay ***/
 .mdl-card.custom {
   width: 76%;
@@ -162,8 +180,6 @@
   font-size: 8rem;
 }
 
-
-
 /********* component state ***********/
 .disabled,
 .disabled * {
@@ -182,7 +198,7 @@
 /* badge of bubble styling */
 .bubble {
   background: rgb(255, 64, 129);
-  margin-top: 10px;
+  margin-top: 18px;
   color: white;
   padding: 15px 5px;
   position: absolute;

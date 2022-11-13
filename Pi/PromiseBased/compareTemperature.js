@@ -1,5 +1,5 @@
 const fs= require('fs')
-const { debug } = require('../debug');
+const { debug } = require('../../debug');
 const {terminateScript} = require('../onOff')
 
 // 1.this method is part of chained promise
@@ -16,31 +16,18 @@ let previusReturn;
 async function compareTemperature(previousPromise) {
   try {
 
-    const {r0} = previousPromise
+    const { r0 } = previousPromise
     if(r0===undefined) throw new Error('{r0} not defined in compareTemperature file')
-    //from global.SET_TEMPERATURE
-    const desireTemperature = SET_TEMPERATURE
+    //from global.SET_TEMPERATURE_VALUE
+    const desireTemperature = global.SET_TEMPERATURE_VALUE
 
     const { celsius } = r0
     if(celsius===undefined) throw new Error('{ro:{celsius}} not defined')
 
     const shouldTurnOn = celsius < desireTemperature
-    if(shouldTurnOn && shouldTurnOn!==previusReturn){ 
-        previusReturn = shouldTurnOn
+    const setTempReached = celsius >= desireTemperature
 
-      debug('should turn On','blue')
-      return {shouldTurnOn}
-    }
-    if(!shouldTurnOn && shouldTurnOn!==previusReturn){ 
-        previusReturn = shouldTurnOn
-
-        debug('should turn OFF','blue')
-        return {shouldTurnOn}
-      }
-    if( shouldTurnOn === previusReturn) {
-        return {shouldTurnOn:'same'}
-        debug(`::same temp result::${String(shouldTurnOn).toUpperCase()}`)
-    }
+    return {shouldTurnOn,setTempReached}
    
   } catch (error) {
     // stop pi commands print error terminate GPIO pins work and

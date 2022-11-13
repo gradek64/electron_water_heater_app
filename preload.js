@@ -1,8 +1,12 @@
 const { debug } = require('./debug');
-const { setBubble } = require('./setRangeInputBadge');
-const {startHeatingProcess,stopHeatingProcess} = require('./heatingWaterProcess')
-const { startStopFillingWater } = require('./startStopFillingWater')
-const {updateUI} = require('./updateUI')
+const { setBubble } = require('./Ui/setRangeInputBadge');
+const { startHeatingProccess, stopHeatingProccess } = require('./Pi/heatingWaterProccess')
+const { startStopFillingWater } = require('./Pi/startStopFillingWater')
+const { updateUI } = require('./Ui/updateUI')
+
+//read settings.json
+const settings = require('./configs/settings.json')
+const { saveConfig } = require('./configs/writeChangeConfig')
 
 window.addEventListener('DOMContentLoaded', () => {
   const replaceText = (selector, text) => {
@@ -31,10 +35,7 @@ window.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.overlay-flex-wrapper')
      || null;
 
-  //chipsInfo on top
-  updateUI('info-current-temp','',false)
-
-     const positionModal = (side = 'right', clickPosition) => {
+    const positionModal = (side = 'right', clickPosition) => {
     const overlayContentWidth = overlayContent.clientWidth;
     switch (side) {
       case 'right':
@@ -54,8 +55,27 @@ window.addEventListener('DOMContentLoaded', () => {
     overlayContent.style.top = `${clickPosition.top}px`;
   };
 
+  //reset button water full tank in settings
+  const resetWaterTankBttn = document.getElementById('resetWaterTankBttn')
+  const iconContainer = document.getElementById('waterIsResetted')
+  const doneIcone = document.createElement('i')
+  doneIcone.classList.add('material-icons')
+  doneIcone.style.color = 'green'
+  const text = document.createTextNode("done")
+
   const clickModalHandler = (position) => (e) => {
     const clickPosition = e.target.getBoundingClientRect();
+    
+    //button is disabled when the water tank is already set false
+    if(global.WATER_IS_FULL===true){
+      resetWaterTankBttn.removeAttribute('disabled')
+    }else {
+      resetWaterTankBttn.setAttribute('disabled',true)
+    }
+   
+    if(iconContainer.children.length){
+      iconContainer.removeChild(doneIcone)
+    }
 
     !!overlay
       ? ((overlay.style.display = 'block'),
@@ -65,11 +85,18 @@ window.addEventListener('DOMContentLoaded', () => {
 
   //add listeners to registered buttons
   element.addEventListener('click', clickModalHandler('left'));
+
   /****** close modal ******/
   outsideOverlay.addEventListener('click', (e) => {
-    e.target.className === 'overlay-flex-wrapper'
-      ? (overlay.style.display = 'none')
-      : false;
+    if(e.target.className === 'overlay-flex-wrapper'){
+
+    //update settings.json on close modal
+    settings.SET_TEMPERATURE_VALUE = global.SET_TEMPERATURE_VALUE
+    settings.START_HEATING_AFTER_FILLING_FLAG = global.START_HEATING_AFTER_FILLING
+    saveConfig(JSON.stringify(settings))
+    //close modal
+    overlay.style.display = 'none'
+    }
   });
 
   /****** end of modal ******/
@@ -77,7 +104,7 @@ window.addEventListener('DOMContentLoaded', () => {
   /***** open heating board *****/
   heatingButton.addEventListener('click', () => {
     updateUI('heatingBoard','',true)
-    startHeatingProcess()
+    startHeatingProccess()
   });
 
   /***** open water filling board *****/
@@ -88,6 +115,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
   /*** water tank full info chip**/
   updateUI('fullTankInfo','',false)
+   /*** water heated info chip**/
+   updateUI('waterHeatedInfo','',false)
+
 
   /***** open water level board *****/
   const confirmWaterLevelBttn =
@@ -98,16 +128,20 @@ window.addEventListener('DOMContentLoaded', () => {
     updateUI('waterLevelBoard','',false);
     updateUI('heatingBoard','',true);
 
-    startHeatingProcess();
+    startHeatingProccess();
   });
 
   /***** close board *****/
-  const terminateProcess = () => {
+  const terminateProcess = (e) => {
+    console.log('ttt',e.target)
+   
+
     updateUI('heatingBoard','',false)
     updateUI('waterFillingBoard','',false)
     updateUI('waterLevelBoard','',false)
+    updateUI('waterHeatedInfo','',false)
 
-    stopHeatingProcess()
+    stopHeatingProccess()
     startStopFillingWater({stop:true})
   };
     const terminateProcessButtons =
@@ -117,25 +151,37 @@ window.addEventListener('DOMContentLoaded', () => {
       bttn.addEventListener('click', terminateProcess);
     })
 
-  //range input
-  const rangeTemperature = document.getElementById('s1');
   //badge or bubble
   const bubble = document.querySelector('.bubble');
 
-  /*  const style = bubble.currentStyle || window.getComputedStyle(bubble);
+  /*  
+  const style = bubble.currentStyle || window.getComputedStyle(bubble);
   console.log('bubble', style.paddingRight);
   console.log('bubble', style.paddingLeft);
   console.log('bubble', style.paddingTop);
   console.log('bubble', style.paddingBottom);
-  console.log('bubble', style.offsetWidth); */
+  console.log('bubble', style.offsetWidth); 
+  
+  set badge once moving knob width set hard due to differences is bubble.scrollWidth
+  */
 
-  //set badge once moving knob width set hard due to differences is bubble.scrollWidth
-  //on load
+  
+  //range input
+  const rangeInputContainer = document.querySelector('.rangeInputContainer')
+  const rangeTemperature = document.createElement('input')
+  rangeTemperature.classList.add('mdl-slider')
+  rangeTemperature.classList.add('mdl-js-slider')
+  rangeTemperature.setAttribute('type','range')
+  rangeTemperature.setAttribute('min',JSON.parse(settings.SET_TEMPERATURE_MIN))
+  rangeTemperature.setAttribute('value',JSON.parse(settings.SET_TEMPERATURE_VALUE))
+  rangeTemperature.setAttribute('max',JSON.parse(settings.SET_TEMPERATURE_MAX))
+  rangeTemperature.setAttribute('step','any')
+  rangeInputContainer.appendChild(rangeTemperature)
   setBubble(rangeTemperature, bubble, 55);
+
   rangeTemperature.addEventListener('input', (e) => {
     const { defaultValue, value: currentValue } = e.target;
     //set badge once moving knob width set hard due to differences is bubble.scrollWidth
-    //on load
     setBubble(e.target, bubble, 55);
     debug(`defaultValue ${defaultValue}`);
     debug(`currentValue ${currentValue}`);
@@ -143,10 +189,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
   //listener for start heating after filling switch
   const startHeatingAfterFillingSwitch = document.getElementById('switch-start-heating-filling');
-  //set default value from global settings
-  startHeatingAfterFillingSwitch.checked = START_HEATING_AFTER_FILLING
-  startHeatingAfterFillingSwitch.setAttribute('previousChecked', startHeatingAfterFillingSwitch.checked);
-
   startHeatingAfterFillingSwitch.addEventListener('change',(e)=>{
     var previousValue = e.target.getAttribute('previousChecked');
     if (previousValue == 'true') {
@@ -160,4 +202,21 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     global.START_HEATING_AFTER_FILLING = this.checked;
   })
+
+  //reset full tank set handler
+  resetWaterTankBttn.addEventListener('click',(e)=>{
+    if(!iconContainer.children.length){
+      doneIcone.appendChild(text)
+      iconContainer.appendChild(doneIcone)
+    }
+    //update info cheap
+    updateUI('fullTankInfo','',false)
+    global.WATER_IS_FULL = false;
+  })
+
+  //set initial settings
+  global.START_HEATING_AFTER_FILLING = JSON.parse(settings.START_HEATING_AFTER_FILLING_FLAG);
+  global.WATER_IS_FULL = false;
+  startHeatingAfterFillingSwitch.checked = JSON.parse(settings.START_HEATING_AFTER_FILLING_FLAG);
+  startHeatingAfterFillingSwitch.setAttribute('previousChecked', startHeatingAfterFillingSwitch.checked);
 });
