@@ -2,6 +2,7 @@ const { poll } = require('rpio');
 var rpio = require('rpio');
 const {updateUI}= require('../Ui/updateUI')
 const {debug} = require('../debug')
+const {showActiveNonActivePin} = require('../Pi/PromiseBased/turnGPIOPinOnOff')
 
 //import pin setup from config
 const { setPins }= require('../configs/config')
@@ -25,9 +26,15 @@ const startStopFillingWater = ({stop}={stop:false}) => {
 	if(stop === true){
 		//when pin is defined/LOW/HIGH close the pin and all its events and reset to STATE LOW
 		 if(rpio.LOW || rpio.HIGH){
-			rpio.close(pinNumber, rpio.PIN_RESET);
-			//swich of the pump ideally check if it was low
-			rpio.write(pinWaterPump,rpio.LOW);
+			 try {
+				rpio.close(pinNumber, rpio.PIN_RESET);
+				//swich of the pump ideally check if it was low
+				rpio.write(pinWaterPump,rpio.LOW);
+				//display pin off
+				showActiveNonActivePin({pinNumber:pinWaterPump}) 
+			 } catch (error) {
+				debug(error)
+			 }
 		 }
 		debug('PIN water pump set LOW')
 		return 
@@ -39,10 +46,11 @@ const startStopFillingWater = ({stop}={stop:false}) => {
 	//set the water pump pin high
 	setTimeout(()=>{
 		if(!water_curcuit_closed){
-
 			rpio.open(pinWaterPump, rpio[setupWaterPump], rpio.LOW);
       		rpio.write(pinWaterPump,rpio.HIGH);
 			debug('PIN water pump set HIGH')
+			//display pin on
+			showActiveNonActivePin({pinNumber:pinWaterPump})
 		} 
 	},200)
 
@@ -74,10 +82,11 @@ const pollcb = (pin) =>{
 									//set global notification
 									global.WATER_IS_FULL = true;
 									updateUI('fullTankInfo','',true)
-
 									//switch off the water pump set pin LOW ideally check if it was low 
 									rpio.write(pinWaterPump,rpio.LOW);
 									debug('water pump pin is LOW')
+									//display pin off
+									showActiveNonActivePin({pinNumber:pinWaterPump})
 						} 
 
 						//NEXT STEPS 

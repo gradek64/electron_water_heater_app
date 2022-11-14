@@ -30,7 +30,17 @@
     rgba(255, 0, 196, 1) 100%
   );
 }
-
+body {
+  position: relative;
+}
+/******** absolute Float Pins Info*******/
+.absoluteFloaPins {
+  background-color: white;
+  position: absolute;
+  bottom: 0;
+  z-index: 100;
+}
+/******** absolute Floa Pins Info*******/
 /******** menu bar *******/
 .wrapper {
   display: flex;

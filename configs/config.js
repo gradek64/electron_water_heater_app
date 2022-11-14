@@ -24,9 +24,8 @@ const setPins = {
         setup:"OUTPUT",
         pinNumber:26 },
         {
-            setup:"OUTPUT",
-            pinNumber:24 }
-
+        setup:"OUTPUT",
+        pinNumber:24 }
     ],
     water_pump:{
         setup:"OUTPUT",

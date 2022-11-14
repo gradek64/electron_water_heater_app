@@ -3,6 +3,7 @@ const { setBubble } = require('./Ui/setRangeInputBadge');
 const { startHeatingProccess, stopHeatingProccess } = require('./Pi/heatingWaterProccess')
 const { startStopFillingWater } = require('./Pi/startStopFillingWater')
 const { updateUI } = require('./Ui/updateUI')
+const { getIsHeatedTimeAgo } = require('./Pi/heatingWaterProccess')
 
 //read settings.json
 const settings = require('./configs/settings.json')
@@ -101,6 +102,28 @@ window.addEventListener('DOMContentLoaded', () => {
 
   /****** end of modal ******/
 
+  /******display hight and low set Pins ******/
+  //pins for immerse heater
+const { setPins }= require('./configs/config');
+const immerse_heaters_pins = setPins.immerse_heaters;
+const inputPins = [...immerse_heaters_pins,setPins.water_pump]
+
+const PinsContainer = document.getElementById('pinContainer')
+inputPins.forEach(({pinNumber}) => {
+ const pin = document.createElement('div')
+ pin.classList.add('material-icons')
+ pin.classList.add('mdl-badge')
+ pin.classList.add('mdl-badge--overlap')
+ pin.classList.add('navyBlueColor')
+ pin.classList.add('mdl-badge--no-background')
+ pin.id = `pin${pinNumber}`
+ pin.setAttribute('data-badge',pinNumber)
+ pin.textContent = "power"
+ PinsContainer.appendChild(pin)
+});
+
+  /****** end of modal ******/
+
   /***** open heating board *****/
   heatingButton.addEventListener('click', () => {
     updateUI('heatingBoard','',true)
@@ -116,8 +139,7 @@ window.addEventListener('DOMContentLoaded', () => {
   /*** water tank full info chip**/
   updateUI('fullTankInfo','',false)
    /*** water heated info chip**/
-   updateUI('waterHeatedInfo','',false)
-
+  getIsHeatedTimeAgo({stop:true})
 
   /***** open water level board *****/
   const confirmWaterLevelBttn =
@@ -136,7 +158,7 @@ window.addEventListener('DOMContentLoaded', () => {
     updateUI('heatingBoard','',false)
     updateUI('waterFillingBoard','',false)
     updateUI('waterLevelBoard','',false)
-    updateUI('waterHeatedInfo','',false)
+    getIsHeatedTimeAgo({stop:true})
 
     stopHeatingProccess()
     startStopFillingWater({stop:true})

@@ -3,6 +3,7 @@ const rpio = require('rpio');
 const { debug } = require('../../debug');
 const {terminateScript} = require('../onOff')
 const {updateUI}= require('../../Ui/updateUI')
+console.log('FILE READ')
 // This method is part of chained promise
 // every promise will received promise from
 // from provious chainined promise
@@ -30,15 +31,27 @@ const turnPins = ({LOW_HIGH}) =>{
   immerse_heaters_pins.forEach( ({pinNumber, setup},index) => {
     if(LOW_HIGH === 'HIGH' && global.SET_PINS !== 'HIGH' ){
       debug(`pin ${pinNumber} turned: ${LOW_HIGH}`,'blue')
-      rpio.open(pinNumber, rpio[setup], rpio.LOW);
-      rpio.write(pinNumber,rpio[LOW_HIGH]);
+      console.log('HERE')
+      //pins are defined
+      if(rpio.LOW || rpio.HIGH){
+        rpio.open(pinNumber, rpio[setup], rpio.LOW);
+        rpio.write(pinNumber,rpio[LOW_HIGH]);
+        //display pin on
+        showActiveNonActivePin({pinNumber})
+      }
     }
     else if(LOW_HIGH === 'LOW' && global.SET_PINS !== 'LOW' ){
       debug(`pin ${pinNumber} turned: ${LOW_HIGH}`,'blue')
       //pins are defined
       if(rpio.LOW || rpio.HIGH){
-        rpio.close(pinNumber, rpio.PIN_RESET);
-        rpio.write(pinNumber,rpio[LOW_HIGH]);
+        try {
+          rpio.close(pinNumber, rpio.PIN_RESET);
+          rpio.write(pinNumber,rpio[LOW_HIGH]);
+          //display pin off
+          showActiveNonActivePin({pinNumber})
+        } catch (error) {
+          debug(error)
+        }
       }
     } else {
       debug(`pin ${pinNumber} stays same: ${LOW_HIGH}`,'blue')
@@ -53,7 +66,18 @@ const turnPins = ({LOW_HIGH}) =>{
   debug(`GPIO: ${immerse_heaters_pins.map(({pinNumber})=>`${pinNumber}`)} ==> ${ LOW_HIGH === 'HIGH' ? 'HIGH:on': 'LOW:off' }`,'blue')
 }
 
+const showActiveNonActivePin = ({pinNumber}) =>{
+  const pin = document.getElementById(`pin${pinNumber}`)
+  const nonActiveClassName = 'mdl-badge--no-background'
+
+  debug(`pin ${pinNumber} display is ${rpio.read(pinNumber) === 0?'LOW':'HIGH'}`,'blue')
+
+  if(rpio.read(pinNumber)=== 0) pin.classList.add(nonActiveClassName)
+  if(rpio.read(pinNumber) === 1) pin.classList.remove(nonActiveClassName) 
+}
 async function turnGPIOPinOnOff(previousPromise) {
+
+  console.log('PROMISE 2')
   try {
  
     const {r1} = previousPromise
@@ -94,4 +118,4 @@ async function turnGPIOPinOnOff(previousPromise) {
   }
 }
 
-module.exports = { turnGPIOPinOnOff, turnPins };
+module.exports = { turnGPIOPinOnOff, turnPins, showActiveNonActivePin };

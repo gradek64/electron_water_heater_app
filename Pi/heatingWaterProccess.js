@@ -10,10 +10,14 @@ let seconds = 0
 let minutes = 0
 const runOutTime = 1 //min
 let timer
-const getIsHeatedTimeAgo = (stop=false) => {
+const getIsHeatedTimeAgo = ({stop=false}={}) => {
+  
+  console.log('!!!STOP timer!!!! ',stop)
   if(stop===true){
+    console.log('Timer is cleared !!!')
     if(timer) clearTimeout(timer)
     updateUI('waterHeatedInfo','',false)
+    return
   }
 const myTimeoutFunction = () =>{
   seconds++
