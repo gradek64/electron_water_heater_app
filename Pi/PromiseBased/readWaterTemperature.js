@@ -28,15 +28,14 @@ async function readTemperature() {
     //from 21.234 to 21.3
      celsius = (tempToInt / 1000).toFixed(1);
      fahrenheit = (celsius * 1.8 + 32).toFixed(1);
-
+    
     //logging
     debug(`{celcius:${celsius},fahrenheit:${fahrenheit}},SET_TEMPERATURE_VALUE:${global.SET_TEMPERATURE_VALUE}`);
 
     //update UI
     updateUI('currentTemperature',`${celsius}&#xb0;C`)
  
-    
-    
+  
     return { celsius, fahrenheit };
 
   } catch (error) {

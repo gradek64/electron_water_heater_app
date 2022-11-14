@@ -149,6 +149,8 @@ inputPins.forEach(({pinNumber}) => {
     global.WATER_IS_FULL = true;  
     updateUI('waterLevelBoard','',false);
     updateUI('heatingBoard','',true);
+    /*** water heated info chip**/
+    getIsHeatedTimeAgo({stop:true})
 
     startHeatingProccess();
   });
@@ -158,7 +160,6 @@ inputPins.forEach(({pinNumber}) => {
     updateUI('heatingBoard','',false)
     updateUI('waterFillingBoard','',false)
     updateUI('waterLevelBoard','',false)
-    getIsHeatedTimeAgo({stop:true})
 
     stopHeatingProccess()
     startStopFillingWater({stop:true})
@@ -180,7 +181,6 @@ inputPins.forEach(({pinNumber}) => {
   console.log('bubble', style.paddingTop);
   console.log('bubble', style.paddingBottom);
   console.log('bubble', style.offsetWidth); 
-  
   set badge once moving knob width set hard due to differences is bubble.scrollWidth
   */
 

@@ -11,22 +11,26 @@ let minutes = 0
 const runOutTime = 1 //min
 let timer
 const getIsHeatedTimeAgo = ({stop=false}={}) => {
-  
-  console.log('!!!STOP timer!!!! ',stop)
+  if(timer) clearTimeout(timer)
   if(stop===true){
     console.log('Timer is cleared !!!')
-    if(timer) clearTimeout(timer)
     updateUI('waterHeatedInfo','',false)
+    //reset 
+    minutes=0
+    seconds=0
     return
   }
 const myTimeoutFunction = () =>{
+  if(stop===true) {
+    clearTimeout(timer)
+    return
+  }
   seconds++
-
   if(seconds === 59){
     minutes++
     seconds = 0
   }
-  console.log('timer is running')
+  debug('timer is running')
 
   const formatedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`
   const formatedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`
@@ -35,7 +39,6 @@ const myTimeoutFunction = () =>{
     updateUI('waterHeatedInfo',message,true)
 
     if(minutes>=runOutTime) {
-      console.log('timer should stop')
       clearTimeout(timer)
       return
     }
@@ -79,7 +82,7 @@ global.SET_PINS = 'LOW'
 
 runOnOffWithTimer(
     {
-    delay:2,
+    delay:3,
     callbackOn:[readTemperature,compareTemperature,turnGPIOPinOnOff]
     })
 

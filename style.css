@@ -36,6 +36,7 @@ body {
 /******** absolute Float Pins Info*******/
 .absoluteFloaPins {
   background-color: white;
+  display: flex;
   position: absolute;
   bottom: 0;
   z-index: 100;
