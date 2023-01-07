@@ -1,4 +1,3 @@
-
 /*
     Those pins are set with rpio library that 
     uses physical pins number from 1 to 40 
@@ -12,31 +11,33 @@
 
 //Below Pins in general SHOULD NOT be changed
 //those pins are attached to 4 relays
-//If U need to add imerse heater for spare Pin 
+//If U need to add imerse heater for spare Pin
 //do it but make sure not other up is using it
 
-const setPins = { 
-    immerse_heaters:
-    [{
-        setup:"OUTPUT",
-        pinNumber:28 },
-        {
-        setup:"OUTPUT",
-        pinNumber:26 },
-        {
-        setup:"OUTPUT",
-        pinNumber:24 }
-    ],
-    water_pump:{
-        setup:"OUTPUT",
-        pinNumber:22
+const setPins = {
+  immerse_heaters: [
+    {
+      setup: "OUTPUT",
+      pinNumber: 28,
     },
-    //this pin CAN NOT BE changed
-    water_level_check:{
-        setup:"INPUT",
-        pinNumber:11
+    {
+      setup: "OUTPUT",
+      pinNumber: 26,
     },
-}
+    {
+      setup: "OUTPUT",
+      pinNumber: 24,
+    },
+  ],
+  water_pump: {
+    setup: "OUTPUT",
+    pinNumber: 22,
+  },
+  //this pin CAN NOT BE changed
+  water_level_check: {
+    setup: "INPUT",
+    pinNumber: 11,
+  },
+};
 
-
-module.exports = {setPins}
+module.exports = { setPins };

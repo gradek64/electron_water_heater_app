@@ -1,51 +1,50 @@
-const fs = require('fs')
-const { debug } = require('../../debug');
-const {updateUI} = require('../../Ui/updateUI')
-const {terminateScript} = require('../onOff')
+const fs = require("fs");
+const { debug } = require("../../debug");
+const { updateUI } = require("../../Ui/updateUI");
+const { terminateScript } = require("../onOff");
 
 // 1.make sure you raspi has wire_1 enabled in configuration first
 // 2. read the file w1_slave
-const fileTempLocation = '/sys/bus/w1/devices/28-3c01d075eb00/w1_slave';
-let celsius = 0
-let fahrenheit = 0
+const fileTempLocation = "/sys/bus/w1/devices/28-3c01d075eb00/w1_slave";
+let celsius = 0;
+let fahrenheit = 0;
 async function readTemperature() {
   try {
-    const data = await fs.promises.readFile(fileTempLocation, 'utf8');
+    const data = await fs.promises.readFile(fileTempLocation, "utf8");
 
     // Extract temperature info from t=21375 with regex
     const tempMatch = data.match(/t=([0-9]+)/);
-    if(!tempMatch){ 
+    if (!tempMatch) {
+      if (celsius && fahrenheit) return { celsius, fahrenheit };
 
-      if(celsius && fahrenheit) return { celsius, fahrenheit };
-
-      debug('temperature not read and previous not set','blue')
-      return  { celsius, fahrenheit };
+      debug("temperature not read and previous not set", "blue");
+      return { celsius, fahrenheit };
     }
     const tempToInt = parseInt(tempMatch[1]);
 
-    if (!tempToInt) throw new Error('temperature not read from file');
+    if (!tempToInt) throw new Error("temperature not read from file");
 
     //from 21.234 to 21.3
-     celsius = (tempToInt / 1000).toFixed(1);
-     fahrenheit = (celsius * 1.8 + 32).toFixed(1);
-    
+    celsius = (tempToInt / 1000).toFixed(1);
+    fahrenheit = (celsius * 1.8 + 32).toFixed(1);
+
     //logging
-    debug(`{celcius:${celsius},fahrenheit:${fahrenheit}},SET_TEMPERATURE_VALUE:${global.SET_TEMPERATURE_VALUE}`);
+    debug(
+      `{celcius:${celsius},fahrenheit:${fahrenheit}},SET_TEMPERATURE_VALUE:${global.SET_TEMPERATURE_VALUE}`
+    );
 
     //update UI
-    updateUI('currentTemperature',`${celsius}&#xb0;C`)
- 
-  
-    return { celsius, fahrenheit };
+    updateUI("currentTemperature", `${celsius}&#xb0;C`);
 
+    return { celsius, fahrenheit };
   } catch (error) {
     // stop pi commands print error terminate GPIO pins work and
     //throw error should be a function that could be used in more places
     // stop_GPIO_Pins()
-    debug(`${error}`,'red')
+    debug(`${error}`, "red");
 
     //stop the process
-    terminateScript()
+    terminateScript();
   }
 }
 

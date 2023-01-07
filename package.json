@@ -1,41 +1,41 @@
 {
-    "name": "my-electron-app",
-    "version": "0.1.0",
-    "author": "your name",
-    "description": "My Electron app",
-    "main": "launch.js",
-    "engines": {
-        "node": "14.21.1"
+  "name": "my-electron-app",
+  "version": "0.1.0",
+  "author": "your name",
+  "description": "My Electron app",
+  "main": "launch.js",
+  "engines": {
+    "node": "14.21.1"
+  },
+  "scripts": {
+    "start": "electron .",
+    "onOff": "DEBUG=true node onOff.js",
+    "readTemp": "DEBUG=true node readWaterTemperature.js",
+    "===>": "after fresh packages are installed 'npm i' run npm rubuild for electron to update",
+    "rebuild": "electron-rebuild -f -w rpio",
+    "start:debug": "DEBUG=true electron .",
+    "build": "electron-builder",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "devDependencies": {
+    "chalk": "^4.1.0",
+    "electron": "^12.0.2",
+    "electron-builder": "^23.6.0",
+    "electron-rebuild": "^3.2.7"
+  },
+  "dependencies": {
+    "rpio": "^2.4.2"
+  },
+  "build": {
+    "appId": "heatingApp_001",
+    "productName": "Heat-me-up",
+    "linux": {
+      "category": "Science",
+      "target": {
+        "target": "AppImage",
+        "arch": "armv7l"
+      }
     },
-    "scripts": {
-        "start": "electron .",
-        "onOff": "DEBUG=true node onOff.js",
-        "readTemp": "DEBUG=true node readWaterTemperature.js",
-        "===>": "after fresh packages are installed 'npm i' run npm rubuild for electron to update",
-        "rebuild": "electron-rebuild -f -w rpio",
-        "start:debug": "DEBUG=true electron .",
-        "build": "electron-builder",
-        "postinstall": "electron-builder install-app-deps"
-    },
-    "devDependencies": {
-        "chalk": "^4.1.0",
-        "electron": "^12.0.2",
-        "electron-builder": "^23.6.0",
-        "electron-rebuild": "^3.2.7"
-    },
-    "dependencies": {
-        "rpio": "^2.4.2"
-    },
-    "build": {
-        "appId": "heatingApp_001",
-        "productName": "Heat-me-up",
-        "linux": {
-            "category": "Science",
-            "target": {
-                "target": "AppImage",
-                "arch": "armv7l"
-            }
-        },
-        "includeSubNodeModules": true
-    }
+    "includeSubNodeModules": true
+  }
 }

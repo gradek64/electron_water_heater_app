@@ -1,6 +1,6 @@
-const fs= require('fs')
-const { debug } = require('../../debug');
-const {terminateScript} = require('../onOff')
+const fs = require("fs");
+const { debug } = require("../../debug");
+const { terminateScript } = require("../onOff");
 
 // 1.this method is part of chained promise
 // every promise will received promise from
@@ -15,28 +15,27 @@ let previusReturn;
 //reads promise number 1 so {r0:{...}}
 async function compareTemperature(previousPromise) {
   try {
-   
-    const { r0 } = previousPromise
-    if(r0===undefined) throw new Error('{r0} not defined in compareTemperature file')
+    const { r0 } = previousPromise;
+    if (r0 === undefined)
+      throw new Error("{r0} not defined in compareTemperature file");
     //from global.SET_TEMPERATURE_VALUE
-    const desireTemperature = global.SET_TEMPERATURE_VALUE
+    const desireTemperature = global.SET_TEMPERATURE_VALUE;
 
-    const { celsius } = r0
-    if(celsius===undefined) throw new Error('{ro:{celsius}} not defined')
+    const { celsius } = r0;
+    if (celsius === undefined) throw new Error("{ro:{celsius}} not defined");
 
-    const shouldTurnOn = celsius < desireTemperature
-    const setTempReached = celsius >= desireTemperature
+    const shouldTurnOn = celsius < desireTemperature;
+    const setTempReached = celsius >= desireTemperature;
 
-    return {shouldTurnOn,setTempReached}
-   
+    return { shouldTurnOn, setTempReached };
   } catch (error) {
     // stop pi commands print error terminate GPIO pins work and
     //throw error should be a function that could be used in more places
     // stop_GPIO_Pins()
-    debug(`${error}`,'red')
+    debug(`${error}`, "red");
 
     //stop the process
-    terminateScript()
+    terminateScript();
   }
 }
 

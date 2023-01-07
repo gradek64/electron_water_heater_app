@@ -1,10 +1,9 @@
-
-Instruction 
+Instruction
 
 ```
-npm start 
+npm start
 
-//or 
+//or
 
 npm run start:DEBUG
 ```
@@ -15,7 +14,7 @@ App uses 'rpio' node library to set rasberry pi GPIO pins
 npm i rpio -S
 ```
 
-if any of the library is using different node version 
+if any of the library is using different node version
 U need to intasll 'electon-rebuild' and run the script
 for the conficted library:
 
@@ -25,5 +24,5 @@ for the conficted library:
  //and run
 
  "rebuild": "electron-rebuild -f -w 'libraryName'",
- 
+
 ```

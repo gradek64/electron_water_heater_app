@@ -1,4 +1,4 @@
-const { debug } = require('../debug');
+const { debug } = require("../debug");
 
 //clever promise based python type sleep function to stop the code
 const sleep = (seconds) => {
@@ -14,8 +14,8 @@ const sleep = (seconds) => {
  *
  * @returns {Boolean}
  */
- function isPromise(fn) {  
-  return !!fn && typeof fn.then === 'function'
+function isPromise(fn) {
+  return !!fn && typeof fn.then === "function";
 }
 
 /**
@@ -26,80 +26,81 @@ const sleep = (seconds) => {
  * @returns {Boolean}
  */
 //is regular function
- const isFunction = (fn) => !!fn && typeof fn === 'function'
+const isFunction = (fn) => !!fn && typeof fn === "function";
 
 //is async function
-const isAsyncFuntion = (fn) => !!fn && fn.constructor.name === 'AsyncFunction'
+const isAsyncFuntion = (fn) => !!fn && fn.constructor.name === "AsyncFunction";
 
 const terminateScript = () => {
-  debug('terminated by Ctrl+C', 'red');
+  debug("terminated by Ctrl+C", "red");
   //runOnOff({ run: false });
   process.exit();
 };
 
-
 const runOnOff = async ({ run = true } = {}) => {
-  if (run) debug('is ON !!!');
-  if (!run) debug('is Off !!!');
+  if (run) debug("is ON !!!");
+  if (!run) debug("is Off !!!");
 };
 
 let isRunning;
-let checked = false
+let checked = false;
 let isFn;
-const runOnOffWithTimer = async (
-  { run = true, 
-    delay=3, 
-    callbackOn,
-    callbackOff = ()=>debug('is OFF!! default calback fired off') } = {}
-  ) => {
+const runOnOffWithTimer = async ({
+  run = true,
+  delay = 3,
+  callbackOn,
+  callbackOff = () => debug("is OFF!! default calback fired off"),
+} = {}) => {
   isRunning = run;
-  
+
   //run forever until break
   while (isRunning === true) {
-
     //check if callback fn is defined
-    if(isRunning && !checked) {
-      if(Array.isArray(callbackOn)){
-        isFn = callbackOn.every((fn)=>isAsyncFuntion(fn))
-        if(!isFn) console.error('YOU NEED DEFINE async callbackOn function in array')
+    if (isRunning && !checked) {
+      if (Array.isArray(callbackOn)) {
+        isFn = callbackOn.every((fn) => isAsyncFuntion(fn));
+        if (!isFn)
+          console.error("YOU NEED DEFINE async callbackOn function in array");
       } else {
-        isFn = isFunction(callbackOn)
-        if(!isFn) console.error('YOU NEED DEFINE async callbackOn or regular function ')
+        isFn = isFunction(callbackOn);
+        if (!isFn)
+          console.error(
+            "YOU NEED DEFINE async callbackOn or regular function "
+          );
       }
-      checked=true
+      checked = true;
 
-      if(!isFn){
-          runOnOffWithTimer({
-            run:false,
-            callbackOn:()=>'default'
-          })
+      if (!isFn) {
+        runOnOffWithTimer({
+          run: false,
+          callbackOn: () => "default",
+        });
 
-        return
+        return;
       }
     }
-    
-    if(isAsyncFuntion(callbackOn)) {
+
+    if (isAsyncFuntion(callbackOn)) {
       debug(`is ON !! ${callbackOn.name} callbackOn fired off`);
-      await callbackOn()
-    }
-    else if(Array.isArray(callbackOn)) {
+      await callbackOn();
+    } else if (Array.isArray(callbackOn)) {
       //chaining promises callback max 4 fns
       (async () => {
         let results = {};
-        results['r0']= await callbackOn[0]()
-        if(callbackOn[1]) results['r1']= await callbackOn[1](results)
-        if(callbackOn[2]) results['r2']= await callbackOn[2](results)
-        if(callbackOn[3]) results['r3']= await callbackOn[3](results)
+        results["r0"] = await callbackOn[0]();
+        if (callbackOn[1]) results["r1"] = await callbackOn[1](results);
+        if (callbackOn[2]) results["r2"] = await callbackOn[2](results);
+        if (callbackOn[3]) results["r3"] = await callbackOn[3](results);
         debug(`is ON !! chaing callbackOn result: ${JSON.stringify(results)}`);
-      })()
+      })();
     }
     //regular function
-    else callbackOn()
+    else callbackOn();
 
     await sleep(delay);
 
     // OFF for delay seconds
-    callbackOff()
+    callbackOff();
     await sleep(delay);
 
     if (isRunning === false) {
@@ -107,19 +108,15 @@ const runOnOffWithTimer = async (
       break;
     }
   }
-  //if came here should be terminated and 
+  //if came here should be terminated and
   //meant to be run
-  if(isRunning) terminateScript()
+  if (isRunning) terminateScript();
 };
 
-
-
 // Handle Ctrl+C exit cleanly
-process.on('SIGINT', () => {
+process.on("SIGINT", () => {
   terminateScript();
 });
-
-
 
 //tests below
 

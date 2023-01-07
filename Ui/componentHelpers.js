@@ -1,4 +1,4 @@
-const { debug } = require('../debug');
+const { debug } = require("../debug");
 
 const disableComponent = (elementId, className) => {
   const element = document.getElementById(elementId) || null;
