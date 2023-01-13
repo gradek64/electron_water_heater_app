@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Temperature App</title>
+    <title>Heater water app</title>
     <meta
       http-equiv="Content-Security-Policy"
       content="script-src 'self' 'unsafe-inline';"
@@ -20,6 +20,35 @@
   <!-- material-ui icons name searchhttps://fonts.google.com/icons?selected=Material+Icons -->
 
   <body class="main-bg-color">
+    <!-- close pi overlay-->
+    <div
+      id="closePie"
+      class="progressBoard overlay-flex-wrapper"
+      style="background-color: rgba(0, 0, 0, 0.5)"
+    >
+      <div class="progressBoardContent contentBoard">
+        <div class="closeOverlay">
+          <h5>Are you sure you want close the timer app ?</h5>
+          <div class="buttons">
+            <button
+              id="closePieButton"
+              class="mdl-button mdl-js-button mdl-button--raised"
+            >
+              <i class="material-icons pinkColor">power_settings_new</i>
+              <span>&nbsp;confirm</span>
+            </button>
+            <button
+              id="cancel"
+              class="mdl-button mdl-js-button mdl-button--raised"
+            >
+              <i class="material-icons pinkColor">not_interested</i>
+              <span class="save">&nbsp;cancel</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- endo of close pi overlay-->
     <!-- heating board-->
     <div
       id="heatingBoard"
@@ -176,17 +205,22 @@
     <!---end of overlay -->
     <!--- menu bar -->
     <div class="bar">
-      <div class="wrapper">
-        <button
-          id="demo-menu-lower-right"
-          style="margin-left: 93%"
-          class="mdl-button mdl-js-button mdl-button--icon"
-        >
-          <i class="material-icons navyBlueColor" style="font-size: 2.1rem"
-            >settings</i
-          >
+      <!--close app -->
+      <div class="clock_pi">
+        <button id="overlayClosePi" class="mdl-button">
+          <i class="material-icons pinkColor">power_settings_new</i>
+          <span>&nbsp;CLOSE APP</span>
         </button>
       </div>
+      <!-- end of close app -->
+      <button
+        id="demo-menu-lower-right"
+        class="mdl-button mdl-js-button mdl-button--icon"
+      >
+        <i class="material-icons navyBlueColor" style="font-size: 2.1rem"
+          >settings</i
+        >
+      </button>
     </div>
     <!---end of menu bar -->
     <!-- info chips-->

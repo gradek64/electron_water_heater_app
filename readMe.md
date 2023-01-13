@@ -26,3 +26,10 @@ for the conficted library:
  "rebuild": "electron-rebuild -f -w 'libraryName'",
 
 ```
+
+Building the final linux AppImage
+
+Electron provides electron-builder package that builds
+the format you specify in package.json in a build section
+There are some options allowing us to customise the look of
+app icon as:

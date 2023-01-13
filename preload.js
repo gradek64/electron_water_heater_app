@@ -32,11 +32,56 @@ window.addEventListener("DOMContentLoaded", () => {
     document.querySelector("#waterRefilingButton") || null;
   const heatingButton = document.querySelector("#heatingButton") || null;
 
+  const closePieButton = document.getElementById("closePieButton");
+  closePieButton.addEventListener("click", () => {
+    turnPins({ LOW_HIGH: "LOW" }, () => {
+      //callback is ready
+      const delay = setTimeout(() => {
+        clearInterval(delay);
+        window.close();
+      }, 1000);
+    });
+  });
+  /***** open overlay to close Pi all together*****/
+  const overlayClosePi = document.getElementById("overlayClosePi");
+  overlayClosePi.addEventListener("click", () => {
+    document.getElementById("closePie").style.display = "block";
+  });
+
+  //overlay elements
+  const outsideOverlay =
+    document.querySelectorAll(".overlay-flex-wrapper") || null;
+  /****** close overlay ******/
+  const closingElements = [outsideOverlay[0], outsideOverlay[1]];
+  closingElements.forEach((element) => {
+    element.addEventListener("click", (e) => {
+      if (e.target.className === "overlay-flex-wrapper") {
+        //update settings.json on close modal
+        settings.SET_TEMPERATURE_VALUE = global.SET_TEMPERATURE_VALUE;
+        settings.START_HEATING_AFTER_FILLING_FLAG =
+          global.START_HEATING_AFTER_FILLING;
+        saveConfig(JSON.stringify(settings));
+        //close modal
+        overlay.style.display = "none";
+      }
+
+      if (
+        e.target.classList.contains("progressBoardContent") ||
+        e.target.classList.contains("save")
+      ) {
+        if (document.querySelector("#closePie"))
+          document.querySelector("#closePie").style.display = "none";
+        if (document.querySelector("#heatingBoard"))
+          document.querySelector("#heatingBoard").style.display = "none";
+      }
+    });
+  });
+
+  /****** end of close overlay ******/
+
   //overlay elements
   const overlay = document.querySelector(".overlay") || null;
   const overlayContent = document.querySelector("#overlay-settings") || null;
-  const outsideOverlay =
-    document.querySelector(".overlay-flex-wrapper") || null;
 
   const positionModal = (side = "right", clickPosition) => {
     const overlayContentWidth = overlayContent.clientWidth;
@@ -89,7 +134,7 @@ window.addEventListener("DOMContentLoaded", () => {
   //add listeners to registered buttons
   element.addEventListener("click", clickModalHandler("left"));
 
-  /****** close modal ******/
+  /****** close modal ******
   outsideOverlay.addEventListener("click", (e) => {
     if (e.target.className === "overlay-flex-wrapper") {
       //update settings.json on close modal

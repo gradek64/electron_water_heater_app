@@ -1,17 +1,27 @@
 const { app, BrowserWindow } = require("electron");
+const { debug } = require("./debug");
 const path = require("path");
+
+debug("process.env.DEBUG set =>", process.env.DEBUG, "green");
 
 function createWindow() {
   const win = new BrowserWindow({
     width: 800,
-    height: 600,
+    height: 480, //800x480 is resolution of the touch screen
+    x: 0,
+    y: 0,
+    title: "Heater water app",
+    autoHideMenuBar: true,
+    frame: process.env.DEBUG ? true : false,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },
   });
 
-  //uncomment for debuggig on raspby
-  win.webContents.openDevTools();
+  //ren dev tool only in debug mode
+  if (process.env.DEBUG === "true") {
+    win.webContents.openDevTools();
+  }
 
   win.loadFile("template.html");
 }
@@ -26,10 +36,4 @@ app.whenReady().then(() => {
       createWindow();
     }
   });
-});
-
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    app.quit();
-  }
 });

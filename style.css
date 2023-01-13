@@ -1,3 +1,26 @@
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  border: 1px solid darkslategray;
+}
+
+::-webkit-scrollbar-thumb {
+  background: darkslategray;
+}
+
+font {
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+  text-rendering: optimizeLegibility !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+/***  overlay close Pie***/
+#closePie {
+  display: none;
+}
+
 /*********** Theme colors ********/
 
 .pinkColor,
@@ -43,12 +66,16 @@ body {
 }
 /******** absolute Floa Pins Info*******/
 /******** menu bar *******/
-.wrapper {
+.bar {
   display: flex;
-  padding: 10px;
-  align-items: flex-end;
+  justify-content: space-between;
 }
-
+button#demo-menu-lower-right {
+  margin: 5px;
+}
+button#overlayClosePi {
+  color: #2f90e4 !important;
+}
 /************* overlay *******/
 .overlay {
   background-color: rgba(177, 112, 169, 0.5);
@@ -156,27 +183,51 @@ body {
   align-items: center;
   justify-content: center;
 }
-.progressBoardContent .contentBoard {
+.progressBoardContent.contentBoard {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.progressBoardContent .contentBoard div {
+.progressBoardContent.contentBoard div {
   margin-right: 10px;
 }
-.progressBoardContent .contentBoard div h5 {
+/*close pie Overlay*/
+.progressBoardContent.contentBoard .closeOverlay {
+  border: 5px inset green;
+  width: 60%;
+  padding: 30px 10px;
+  background-color: seashell;
+}
+.progressBoardContent.contentBoard .closeOverlay h5 {
+  color: hotpink;
+  font-size: 1.5rem;
+}
+
+.progressBoardContent.contentBoard .closeOverlay div.buttons {
+  padding: 30px 10px 10px 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.progressBoardContent.contentBoard
+  .closeOverlay
+  div.buttons
+  button:first-child {
+  background-color: green;
+}
+.progressBoardContent.contentBoard .closeOverlay div.buttons button:last-child {
+  background-color: hotpink;
+}
+
+.progressBoardContent.contentBoard div h5 {
   display: flex;
   font-size: 1rem;
   align-items: center;
   justify-content: center;
 }
-.progressBoardContent .contentBoard div,
-.progressBoardContent .contentBoard p {
+.progressBoardContent.contentBoard div,
+.progressBoardContent.contentBoard p {
   text-align: center;
-}
-.progressBoardContent img {
-  width: 40%;
-  height: auto;
 }
 
 /********* front button ***********/
