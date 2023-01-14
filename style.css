@@ -55,6 +55,8 @@ font {
 }
 body {
   position: relative;
+  width: 100vw;
+  height: 100vh;
 }
 /******** absolute Float Pins Info*******/
 .absoluteFloaPins {
@@ -165,7 +167,8 @@ button#overlayClosePi {
 }
 /*** heatingBoard overlay ***/
 .mdl-card.custom {
-  width: 76%;
+  width: 66%;
+  height:80%;
 }
 .progressBoard {
   position: absolute;
@@ -183,6 +186,28 @@ button#overlayClosePi {
   align-items: center;
   justify-content: center;
 }
+.contentBoard {
+  text-align: center;
+  height:100%;
+  padding: 5px;
+}
+
+.contentBoard h2,
+.contentBoard h3,
+.contentBoard h4,
+.contentBoard h5 {
+  text-align: center;
+  margin:0;
+  padding: 10px;
+}
+
+.contentBoard img {
+  width: 50%;
+  height: auto;
+  margin-left: 10px;
+}
+
+
 .progressBoardContent.contentBoard {
   display: flex;
   flex-direction: column;
@@ -239,10 +264,11 @@ button#overlayClosePi {
   margin: 5%;
   cursor: pointer;
   background-color: whitesmoke;
+  height: 90px;
 }
 
 .icon-big {
-  font-size: 8rem;
+  font-size: 5rem;
 }
 
 /********* component state ***********/
@@ -283,6 +309,7 @@ button#overlayClosePi {
 
 .infoChips p {
   border-radius: 20px;
+  margin:0;
 }
 .infoChips p:nth-child(1) {
   margin-left: 8%;
@@ -310,7 +337,7 @@ button#overlayClosePi {
 /********* responsive ***********/
 @media only screen and (max-width: 800px) {
   .icon-big {
-    font-size: 4rem;
+    font-size: 3rem;
   }
 
   .front-card h3 {

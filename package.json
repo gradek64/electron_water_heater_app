@@ -17,7 +17,7 @@
     "==> format": "format after save does not work so at least run all files to format",
     "format": "npx prettier --write .",
     "build": "electron-builder",
-    "app-image": "chmod +x dist/Time-me-up-0.1.0-armv7l.AppImage && ./dist/Time-me-up-0.1.0-armv7l.AppImage",
+    "app-image": "chmod +x dist/Heat-me-up-0.1.0-armv7l.AppImage && ./dist/Heat-me-up-0.1.0-armv7l.AppImage",
     "postinstall": "electron-builder install-app-deps"
   },
   "devDependencies": {

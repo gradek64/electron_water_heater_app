@@ -24,7 +24,11 @@
     <div
       id="closePie"
       class="progressBoard overlay-flex-wrapper"
-      style="background-color: rgba(0, 0, 0, 0.5)"
+      style="
+      background-color: rgba(0, 0, 0, 0.8);
+      overflow: hidden;
+      z-index: 101;
+      "
     >
       <div class="progressBoardContent contentBoard">
         <div class="closeOverlay">
@@ -70,17 +74,17 @@
             <!--  <img src="./assets/temp_rising.gif" /> -->
             <div>
               <h5 class="navyBlueColor">
-                <i class="material-icons navyBlueColor">device_thermostat</i
-                >Current Temperature
-              </h5>
-              <h2 id="currentTemperature" class="navyBlueColor">0&#xb0;C</h2>
-            </div>
-            <div>
-              <h5 class="navyBlueColor">
                 <i class="material-icons pinkColor">device_thermostat</i>Desire
                 Temperature
               </h5>
               <h2 id="desireTemperature" class="pinkColor">0&#xb0;C</h2>
+            </div>
+            <div>
+              <h5 class="navyBlueColor">
+                <i class="material-icons navyBlueColor">device_thermostat</i
+                >Current Temperature
+              </h5>
+              <h2 id="currentTemperature" class="navyBlueColor">0&#xb0;C</h2>
             </div>
           </div>
           <div class="mdl-card__actions mdl-card--border">

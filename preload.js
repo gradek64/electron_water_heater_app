@@ -34,13 +34,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const closePieButton = document.getElementById("closePieButton");
   closePieButton.addEventListener("click", () => {
-    turnPins({ LOW_HIGH: "LOW" }, () => {
-      //callback is ready
-      const delay = setTimeout(() => {
-        clearInterval(delay);
-        window.close();
-      }, 1000);
-    });
+    window.close();
   });
   /***** open overlay to close Pi all together*****/
   const overlayClosePi = document.getElementById("overlayClosePi");
