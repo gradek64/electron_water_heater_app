@@ -60,7 +60,7 @@ body {
 }
 /******** absolute Float Pins Info*******/
 .absoluteFloaPins {
-  background-color: white;
+  background-color: #2f90e4;
   display: flex;
   position: absolute;
   bottom: 0;
