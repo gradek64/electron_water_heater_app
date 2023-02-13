@@ -161,6 +161,7 @@ button#overlayClosePi {
   width: 90%;
   justify-content: center;
   margin: 0 auto;
+  padding-top: 20px;
 }
 .tank-full-info span {
   font-size: 17px !important;
@@ -168,7 +169,7 @@ button#overlayClosePi {
 /*** heatingBoard overlay ***/
 .mdl-card.custom {
   width: 66%;
-  height:80%;
+  height: 80%;
 }
 .progressBoard {
   position: absolute;
@@ -188,7 +189,7 @@ button#overlayClosePi {
 }
 .contentBoard {
   text-align: center;
-  height:100%;
+  height: 100%;
   padding: 5px;
 }
 
@@ -197,7 +198,7 @@ button#overlayClosePi {
 .contentBoard h4,
 .contentBoard h5 {
   text-align: center;
-  margin:0;
+  margin: 0;
   padding: 10px;
 }
 
@@ -206,7 +207,6 @@ button#overlayClosePi {
   height: auto;
   margin-left: 10px;
 }
-
 
 .progressBoardContent.contentBoard {
   display: flex;
@@ -309,7 +309,7 @@ button#overlayClosePi {
 
 .infoChips p {
   border-radius: 20px;
-  margin:0;
+  margin: 0;
 }
 .infoChips p:nth-child(1) {
   margin-left: 8%;
