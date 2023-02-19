@@ -11,32 +11,37 @@
 
 //Below Pins in general SHOULD NOT be changed
 //those pins are attached to 4 relays
-//If U need to add imerse heater for spare Pin
+//If U need to add immerse heater for spare Pin
 //do it but make sure not other up is using it
 
 const setPins = {
   immerse_heaters: [
     {
-      setup: "OUTPUT",
+      setup: 'OUTPUT',
       pinNumber: 28,
     },
     {
-      setup: "OUTPUT",
+      setup: 'OUTPUT',
       pinNumber: 26,
     },
     {
-      setup: "OUTPUT",
+      setup: 'OUTPUT',
       pinNumber: 24,
     },
   ],
   water_pump: {
-    setup: "OUTPUT",
+    setup: 'OUTPUT',
     pinNumber: 22,
   },
   //this pin CAN NOT BE changed
   water_level_check: {
-    setup: "INPUT",
+    setup: 'INPUT',
     pinNumber: 11,
+  },
+  //this pin CAN NOT BE changed
+  buzzer_pwm_signal: {
+    setup: 'OUTPUT',
+    pinNumber: 12,
   },
 };
 
