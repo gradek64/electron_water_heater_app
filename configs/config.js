@@ -37,12 +37,7 @@ const setPins = {
   water_level_check: {
     setup: 'INPUT',
     pinNumber: 11,
-  },
-  //this pin CAN NOT BE changed
-  buzzer_pwm_signal: {
-    setup: 'OUTPUT',
-    pinNumber: 12,
-  },
+  }
 };
 
 module.exports = { setPins };

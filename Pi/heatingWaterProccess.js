@@ -10,6 +10,8 @@ let seconds = 0;
 let minutes = 0;
 const runOutTime = 1; //min
 let timer;
+let calledOnce = false;
+
 const getIsHeatedTimeAgo = ({ stop = false } = {}) => {
   if (timer) clearTimeout(timer);
   if (stop === true) {
@@ -40,7 +42,12 @@ const getIsHeatedTimeAgo = ({ stop = false } = {}) => {
         : "Water is cold .. heat it up again !";
 
     updateUI("waterHeatedInfo", message, true);
-
+    //this has to be requested from root file for python shell
+    if(!calledOnce){
+      calledOnce = true
+      require('../preload').playPythonSong();
+    }
+   
     if (minutes >= runOutTime) {
       clearTimeout(timer);
       return;

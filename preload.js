@@ -1,4 +1,4 @@
-const pyshell = require('python-shell');
+const { PythonShell } = require('python-shell');
 const { debug } = require('./debug');
 const { setBubble } = require('./Ui/setRangeInputBadge');
 const {
@@ -24,6 +24,17 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+let songStarted = false
+const playPythonSong = () => {
+  if(!songStarted){
+    songStarted = true;
+    PythonShell.run('./python/call_pwm_buzzer.py',null).then(messages=>{
+      // results is an array consisting of messages collected during execution
+      console.log('results: %j', messages);
+    })
+  }
+}
+
 window.addEventListener('DOMContentLoaded', () => {
   /****** open modal ******/
 
@@ -40,13 +51,6 @@ window.addEventListener('DOMContentLoaded', () => {
   /***** open overlay to close Pi all together*****/
   const overlayClosePi = document.getElementById('overlayClosePi');
   overlayClosePi.addEventListener('click', () => {
-    //test
-    pyshell.run('./python/hello.py', function (err, results) {
-      if (err) throw err;
-      console.log('hello.py finished.');
-      console.log('results', results);
-    });
-
     document.getElementById('closePie').style.display = 'block';
   });
 
@@ -304,3 +308,5 @@ window.addEventListener('DOMContentLoaded', () => {
     startHeatingAfterFillingSwitch.checked,
   );
 });
+
+module.exports = { playPythonSong };

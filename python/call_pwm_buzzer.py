@@ -1,7 +1,6 @@
-from machine import Pin, PWM
-from utime import sleep
-buzzer = PWM(Pin(15))
 
+import RPi.GPIO as GPIO
+import time
 tones = {
 "B0": 31,
 "C1": 33,
@@ -94,22 +93,26 @@ tones = {
 "DS8": 4978
 }
 
-song = ["E5","G5","A5","P","E5","G5","B5","A5","P","E5","G5","A5","P","G5","E5","P"]
+song = ["E5","G5","A5","E5","G5","B5","A5","E5","G5","A5","G5","E5"]
+
+ # set actual GPIO BCM Numbers
+GPIO.setmode(GPIO.BCM)             
+# define the RPI GPIO Pin we will use with PWM (PWM)
+RPI_Pin = 18 
+initilaFreq = 1000
+GPIO.setup(RPI_Pin, GPIO.OUT)  # set RPI_PIN as OUTPUT mode
+GPIO.output(RPI_Pin, GPIO.LOW) # set RPI_PIN LOW to at the start 
+global buzzer 
+buzzer = GPIO.PWM(RPI_Pin, initilaFreq)  # Initialise instance and set Frequency
+buzzer.start(50)      # set half duty cycle            
 
 def playTone(frequency):
-    buzzer.duty_u16(1000)
-    buzzer.freq(frequency)
-
-def beQuiet():
-    buzzer.duty_u16(0)
+    buzzer.ChangeFrequency(frequency)
+    # print('is playing')
 
 #play song 4 times
 for x in range(4):
     for i in range(len(song)):
-        if (song[i] == "P"):
-            beQuiet()
-        else:
-            playTone(tones[song[i]])
-            sleep(0.3)
-            beQuiet()
+        playTone(tones[song[i]])
+        time.sleep(0.2)
             
